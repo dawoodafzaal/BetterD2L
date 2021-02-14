@@ -1,0 +1,35 @@
+{
+  "name": "calgary-hacks-2021-group-66",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/maazhassan/Calgary-Hacks-2021-Group-66.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/maazhassan/Calgary-Hacks-2021-Group-66/issues"
+  },
+  "homepage": "https://github.com/maazhassan/Calgary-Hacks-2021-Group-66#readme",
+  "dependencies": {
+    "axios": "^0.21.1",
+    "axios-oauth-client": "^1.4.0",
+    "axios-token-interceptor": "^0.2.0",
+    "vue": "^2.6.12",
+    "vue-material": "^1.0.0-beta-15",
+    "vue-router": "^3.5.1"
+  },
+  "devDependencies": {
+    "autoprefixer": "^10.2.4",
+    "laravel-mix": "^6.0.11",
+    "postcss": "^8.2.6",
+    "tailwindcss": "^2.0.3",
+    "vue-loader": "^15.9.6",
+    "vue-template-compiler": "^2.6.12"
+  }
+}
