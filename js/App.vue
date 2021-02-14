@@ -92,7 +92,6 @@
 
 <script>
 import axios from 'axios';
-import oauth2 from 'client-oauth2';
 
 export default {
 	data() {
