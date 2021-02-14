@@ -1,7 +1,7 @@
 <template>
-	<div>
-		<div id="calendar"></div>
-	</div>
+	<section class="py-6 px-6">
+		<div id="calendar" class="rounded-lg bg-white p-6 pb-12 shadow-lg""></div>
+	</section>
 </template>
 
 <script>

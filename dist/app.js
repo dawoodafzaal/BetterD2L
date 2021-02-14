@@ -15204,6 +15204,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
 //
 //
 //
@@ -15236,9 +15238,46 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
-    return {};
+    return {
+      firstName: '',
+      lastName: ''
+    };
+  },
+  created: function created() {
+    var _this = this;
+
+    var config = {
+      method: 'get',
+      url: 'https://devcop.brightspace.com/d2l/api/lp/1.28/users/whoami',
+      headers: {
+        'Authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6IjYzYzc5ZjIzLWZiMTAtNGI4YS1hMjdlLWI4YTc4NGJmNWI5MCJ9.eyJpc3MiOiJodHRwczovL2FwaS5icmlnaHRzcGFjZS5jb20vYXV0aCIsImF1ZCI6Imh0dHBzOi8vYXBpLmJyaWdodHNwYWNlLmNvbS9hdXRoL3Rva2VuIiwiZXhwIjoxNjEzMjg1NTI5LCJuYmYiOjE2MTMyODE5MjksInN1YiI6IjE5NSIsInRlbmFudGlkIjoiNTI3MzEzMTctMzcyYS00ZGI0LWI0OWQtNDk1MDJjZTQzZjJiIiwiYXpwIjoiNWQyNzQ1MGYtMmNlOS00ZGNlLTk1NzAtMGIyMzQ1ODBkZmRkIiwic2NvcGUiOiJjb250ZW50Oio6KiBjb3JlOio6KiBkYXRhaHViOio6KiBkaXNjdXNzaW9uczoqOiogZW5yb2xsbWVudDoqOiogZ3JhZGVzOio6KiBxdWl6emluZzoqOiogcmVwb3J0aW5nOio6KiByb2xlOio6KiB1c2VyczoqOioiLCJqdGkiOiIxNGI2Njk5Mi0xNTlhLTRmMzYtYTYyZi1kOTg5YzE4NDE4ZDIifQ.bKbpi3zugXsxh7QoLaKMYog4wYZEIML0E1xDg3KJI3QTuMet8RSmEWlo_aUN-XFULl_Bs2ZLcqzkWH9okdSLMcI_-WpZyAG53kaBi7tJIxHfRFmmWVQAZWYtXz8A4YqcUf-cs6U4kaqnlpSXb6doZKGXfTI8hMoVCOmzT_-YCZuWxGqALiTTzP6FRxj8xVk2pKnzZ3COAaI_5iMGd4w4ie-YlETmM0u3mPOBO3IJX1LnlYPZubnGNWOLpFG5aFZrFfXGDtQUxOAFgT2c5MU75izpOMWiZ1ADpS4Q97H8s3tduirKQSnuNfHO11uE33PLVfwEcnkGDOr0dcrVzg34Ow'
+      }
+    };
+    axios__WEBPACK_IMPORTED_MODULE_0___default()(config).then(function (response) {
+      _this.firstName = response.data.FirstName;
+      _this.lastName = response.data.LastName;
+    })["catch"](function (error) {
+      console.log(error);
+    });
   }
 });
 
@@ -15398,12 +15437,38 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
 //
 //
 //
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {};
@@ -16979,9 +17044,35 @@ var render = function() {
                 "router-link",
                 {
                   staticClass: "text-lg font-bold text-white",
+                  staticStyle: { color: "white" },
                   attrs: { to: "/calendar" }
                 },
-                [_vm._v("Calendar")]
+                [
+                  _c(
+                    "svg",
+                    {
+                      staticClass: "w-6 h-6 align-top inline-block",
+                      attrs: {
+                        xmlns: "http://www.w3.org/2000/svg",
+                        fill: "none",
+                        viewBox: "0 0 24 24",
+                        stroke: "currentColor"
+                      }
+                    },
+                    [
+                      _c("path", {
+                        attrs: {
+                          "stroke-linecap": "round",
+                          "stroke-linejoin": "round",
+                          "stroke-width": "2",
+                          d:
+                            "M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
+                        }
+                      })
+                    ]
+                  ),
+                  _vm._v("\n\t\t\t\t\t\tCalendar")
+                ]
               )
             ],
             1
@@ -16997,9 +17088,35 @@ var render = function() {
                 "router-link",
                 {
                   staticClass: "text-lg font-bold text-white",
+                  staticStyle: { color: "white" },
                   attrs: { to: "/checklist" }
                 },
-                [_vm._v("Checklist")]
+                [
+                  _c(
+                    "svg",
+                    {
+                      staticClass: "w-6 h-6 align-top inline-block",
+                      attrs: {
+                        xmlns: "http://www.w3.org/2000/svg",
+                        fill: "none",
+                        viewBox: "0 0 24 24",
+                        stroke: "currentColor"
+                      }
+                    },
+                    [
+                      _c("path", {
+                        attrs: {
+                          "stroke-linecap": "round",
+                          "stroke-linejoin": "round",
+                          "stroke-width": "2",
+                          d:
+                            "M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"
+                        }
+                      })
+                    ]
+                  ),
+                  _vm._v("\n\t\t\t\t\t\tChecklist")
+                ]
               )
             ],
             1
@@ -17015,9 +17132,31 @@ var render = function() {
                 "router-link",
                 {
                   staticClass: "text-lg font-bold text-white",
+                  staticStyle: { color: "white" },
                   attrs: { to: "/communication" }
                 },
-                [_vm._v("Communication")]
+                [
+                  _c(
+                    "svg",
+                    {
+                      staticClass: "w-6 h-6 align-top inline-block",
+                      attrs: {
+                        xmlns: "http://www.w3.org/2000/svg",
+                        viewBox: "0 0 20 20",
+                        fill: "currentColor"
+                      }
+                    },
+                    [
+                      _c("path", {
+                        attrs: {
+                          d:
+                            "M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z"
+                        }
+                      })
+                    ]
+                  ),
+                  _vm._v("\n\t\t\t\t\t\tQuizzes")
+                ]
               )
             ],
             1
@@ -17033,9 +17172,35 @@ var render = function() {
                 "router-link",
                 {
                   staticClass: "text-lg font-bold text-white",
+                  staticStyle: { color: "white" },
                   attrs: { to: "/dropbox" }
                 },
-                [_vm._v("Dropbox")]
+                [
+                  _c(
+                    "svg",
+                    {
+                      staticClass: "w-6 h-6 align-top inline-block",
+                      attrs: {
+                        xmlns: "http://www.w3.org/2000/svg",
+                        fill: "none",
+                        viewBox: "0 0 24 24",
+                        stroke: "currentColor"
+                      }
+                    },
+                    [
+                      _c("path", {
+                        attrs: {
+                          "stroke-linecap": "round",
+                          "stroke-linejoin": "round",
+                          "stroke-width": "2",
+                          d:
+                            "M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"
+                        }
+                      })
+                    ]
+                  ),
+                  _vm._v("\n\t\t\t\t\t\tDropbox")
+                ]
               )
             ],
             1
@@ -17050,7 +17215,25 @@ var render = function() {
         staticClass: "bg-gray-200 w-3/4 min-h-screen",
         staticStyle: { "margin-left": "25%" }
       },
-      [_vm._m(0), _vm._v(" "), _c("router-view")],
+      [
+        _c(
+          "nav",
+          {
+            staticClass: "flex w-full py-8 px-6 bg-white shadow justify-between"
+          },
+          [
+            _vm._m(0),
+            _vm._v(" "),
+            _c("div", { staticClass: "text-xl font-semibold pr-4 pl-2" }, [
+              _vm._v(
+                "Hello, " + _vm._s(_vm.firstName) + " " + _vm._s(_vm.lastName)
+              )
+            ])
+          ]
+        ),
+        _vm._v(" "),
+        _c("router-view")
+      ],
       1
     )
   ])
@@ -17060,17 +17243,9 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c(
-      "nav",
-      { staticClass: "flex w-full py-8 px-4 bg-white shadow justify-between" },
-      [
-        _c("div", [_vm._v("\n\t\t\t\t \n\t\t\t")]),
-        _vm._v(" "),
-        _c("div", { staticClass: "text-xl font-semibold pr-4 pl-2" }, [
-          _vm._v("Hello, Student")
-        ])
-      ]
-    )
+    return _c("div", [
+      _c("h1", { staticClass: "text-3xl font-bold" }, [_vm._v("BetterD2L")])
+    ])
   }
 ]
 render._withStripped = true
@@ -17102,7 +17277,12 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", [_c("div", { attrs: { id: "calendar" } })])
+    return _c("section", { staticClass: "py-6 px-6" }, [
+      _c("div", {
+        staticClass: "rounded-lg bg-white p-6 pb-12 shadow-lg",
+        attrs: { id: "calendar" }
+      })
+    ])
   }
 ]
 render._withStripped = true
@@ -17252,14 +17432,89 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _vm._m(0)
+  return _c("section", { staticClass: "py-6 px-6" }, [
+    _c(
+      "div",
+      { staticClass: "rounded-lg bg-white p-6 pb-12 shadow-lg" },
+      [
+        _vm._m(0),
+        _vm._v(" "),
+        _vm._l(_vm.items, function(course, name) {
+          return _c("div", [
+            _c(
+              "h2",
+              {
+                staticClass: "w-full text-lg border-b mt-6 mb-2 py-2 font-bold"
+              },
+              [_vm._v(_vm._s(name))]
+            ),
+            _vm._v(" "),
+            _c(
+              "table",
+              { staticClass: "w-full" },
+              _vm._l(course, function(item) {
+                return _c("tr", [
+                  _c("td", { staticClass: "align-top w-1/2" }, [
+                    _c(
+                      "a",
+                      {
+                        staticClass: "text-xl",
+                        attrs: { href: item.link, target: "_blank" }
+                      },
+                      [_vm._v(_vm._s(item.title))]
+                    )
+                  ]),
+                  _vm._v(" "),
+                  _c("td", { staticClass: "align-top" }, [
+                    item.submitted_on
+                      ? _c("span", [
+                          _vm._v("Submitted: " + _vm._s(item.submitted_on))
+                        ])
+                      : _vm._e()
+                  ]),
+                  _vm._v(" "),
+                  _c("td", { staticClass: "text-right pb-4" }, [
+                    !item.submitted_on
+                      ? _c("div", [
+                          _c(
+                            "button",
+                            {
+                              staticClass:
+                                "uppercase text-sm py-2 px-4 bg-blue-500 text-white rounded font-bold mb-2"
+                            },
+                            [_vm._v("Add to checklist")]
+                          )
+                        ])
+                      : _vm._e(),
+                    _vm._v(" "),
+                    _c("span", [
+                      _vm._v("Closed by "),
+                      _c("strong", [_vm._v(_vm._s(item.due_on))])
+                    ])
+                  ])
+                ])
+              }),
+              0
+            )
+          ])
+        })
+      ],
+      2
+    )
+  ])
 }
 var staticRenderFns = [
   function() {
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", [_c("h1", [_vm._v("Communication")])])
+    return _c(
+      "header",
+      {
+        staticClass: "flex justify-between py-4 mb-4 border-b-2 border-blue-500"
+      },
+      [_c("h1", { staticClass: "text-5xl font-bold" }, [_vm._v("Quizzes")])]
+    )
   }
 ]
 render._withStripped = true
