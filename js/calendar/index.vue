@@ -30,8 +30,8 @@ export default {
 			},
 		  	events: [
 				{
-				title: 'Submit Worksheet 5 (CPSC 329 Dropbox)',
-				start: '2021-02-14',
+					title: 'Submit Worksheet 5 (CPSC 329 Dropbox)',
+					start: '2021-02-14',
 				},
 	    	]
 		});
