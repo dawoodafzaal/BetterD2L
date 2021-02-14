@@ -2,6 +2,7 @@ from flask import Flask
 from flask import jsonify
 from flask_cors import CORS, cross_origin
 import requests
+import random
 
 app = Flask(__name__)
 STUDENT_ID = 195
@@ -123,3 +124,13 @@ def quizzes():
         response.append(info)
     
     return jsonify(response)
+
+questions = ["How are you doing?", "How much time have you spent today exercising?", "When was the last time you drank water?", "Am I tired?"]
+
+@app.route('/mentalHealth')
+@cross_origin()
+def mentalHealth():
+  randomnum = random.randint(0,4)
+  question = questions[randomnum]
+
+  return jsonify({"question": question})
