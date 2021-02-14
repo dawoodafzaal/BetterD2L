@@ -47,7 +47,9 @@ def dropboxes():
             info['num_of_submissions'] = 0
             info['latest_submission'] = None
         
-        response['Computer Basics'].append(info);
+        info['org_id'] = 7855
+
+        response['Computer Basics'].append(info)
 
     # URL for dropboxes endpoint
     dropboxes_url = "https://devcop.brightspace.com/d2l/api/le/1.51/7032/dropbox/folders/"
@@ -78,7 +80,9 @@ def dropboxes():
             info['num_of_submissions'] = 0
             info['latest_submission'] = None
         
-        response['Physics'].append(info);
+        info['org_id'] = 7032
+
+        response['Physics'].append(info)
     
     return jsonify(response)
 

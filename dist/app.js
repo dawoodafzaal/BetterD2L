@@ -17016,7 +17016,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
@@ -17059,7 +17058,9 @@ __webpack_require__.r(__webpack_exports__);
       this.showCreateItem = false;
     },
     checkItem: function checkItem() {},
-    deleteItem: function deleteItem() {}
+    deleteItem: function deleteItem(index) {
+      array.splice(index, 1);
+    }
   }
 });
 
@@ -20369,26 +20370,9 @@ var render = function() {
         "table",
         { staticClass: "w-full" },
         [
-          _vm._l(_vm.items, function(item) {
+          _vm._l(_vm.items, function(item, new_index) {
             return _c("tr", [
-              _c(
-                "td",
-                { staticClass: "w-2" },
-                [
-                  _c("md-checkbox", {
-                    model: {
-                      value: item.checked_at,
-                      callback: function($$v) {
-                        _vm.$set(item, "checked_at", $$v)
-                      },
-                      expression: "item.checked_at"
-                    }
-                  })
-                ],
-                1
-              ),
-              _vm._v(" "),
-              _c("td", { staticClass: "text-xl" }, [
+              _c("td", { staticClass: "text-xl py-4" }, [
                 _c(
                   "a",
                   {
@@ -20521,7 +20505,14 @@ var render = function() {
                           "a",
                           {
                             staticClass: "text-xl",
-                            attrs: { target: "_blank" }
+                            attrs: {
+                              href:
+                                "https://devcop.brightspace.com/d2l/lms/dropbox/user/folder_submit_files.d2l?db=" +
+                                item.id +
+                                "&grpid=0&isprv=0&bp=0&ou=" +
+                                item.org_id,
+                              target: "_blank"
+                            }
                           },
                           [_vm._v(_vm._s(item.title))]
                         )

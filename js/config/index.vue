@@ -6,9 +6,8 @@
 				<button class="text-3xl font-bold hover:text-blue-500 focus:outline-none" @click="createItem">+ Add a shell</button>
 			</header>
 			<table class="w-full">
-				<tr v-for="item in items">
-					<td class="w-2"><md-checkbox v-model="item.checked_at"></md-checkbox></td>
-					<td class="text-xl">
+				<tr v-for="(item, new_index) in items">
+					<td class="text-xl py-4">
 						<a :href="`https://devcop.brightspace.com/d2l/le/content/${item.id}/Home`" target="_blank">{{ item.title }}</a>
 					</td>
 					<td class="uppercase text-right">Shell id: {{ item.id }}</td>
@@ -79,8 +78,8 @@ export default {
 		checkItem() {
 
 		},
-		deleteItem() {
-
+		deleteItem(index) {
+			array.splice(index, 1);
 		}
 	}
 }
