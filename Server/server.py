@@ -1,4 +1,6 @@
 from flask import Flask
+from flask import jsonify
+from flask_cors import CORS, cross_origin
 import requests
 
 app = Flask(__name__)
@@ -8,7 +10,11 @@ headers = {
   'Cookie': 'ADRUM=s=1613250634620&r=https%3A%2F%2Fdevcop.brightspace.com%2Fd2l%2FsystemCheck%2Fwidget%3F0; d2lSessionVal=TKH40vprvvlOxHs5ZGSliFnXb; d2lSecureSessionVal=Y2iwueXFvbe2Ygxmc183PA5zw'
 }
 
+cors = CORS(app)
+app.config['CORS_HEADERS'] = 'Content-Type'
+
 @app.route('/dropboxes')
+@cross_origin()
 def dropboxes():
     # URL for dropboxes endpoint
     dropboxes_url = "https://devcop.brightspace.com/d2l/api/le/1.51/7855/dropbox/folders/"
@@ -19,7 +25,7 @@ def dropboxes():
     if len(dropboxes) == 0:
         return {}
 
-    response = []
+    response = { 'Computer Basics': [], 'Physics': []}
 
     # Loop through dropboxes and construct response
     for db in dropboxes:
@@ -41,9 +47,40 @@ def dropboxes():
             info['num_of_submissions'] = 0
             info['latest_submission'] = None
         
-        response.append(info)
+        response['Computer Basics'].append(info);
+
+    # URL for dropboxes endpoint
+    dropboxes_url = "https://devcop.brightspace.com/d2l/api/le/1.51/7032/dropbox/folders/"
+
+    # Call API and serialize response into a dictionary (JSON)
+    dropboxes = requests.request("GET", dropboxes_url, headers=headers, data={}).json()
+
+    if len(dropboxes) == 0:
+        return {}
+
+    # Loop through dropboxes and construct response
+    for db in dropboxes:
+        db_id = db['Id']
+        info = {}
+        info['id'] = db_id
+        info['title'] = db['Name']
+        info['due_on'] = db['DueDate'][0:10]
+
+        # Call API to get relevant submission info for our student
+        submissions_url = "https://devcop.brightspace.com/d2l/api/le/1.51/7855/dropbox/folders/"+str(db_id)+"/submissions/"
+        submissions = requests.request("GET", submissions_url, headers=headers, data={}).json()
+
+        try:
+            sbmsn = next(item for item in submissions if item['Entity']['EntityId'] == STUDENT_ID)
+            info['num_of_submissions'] = len(sbmsn['Submissions'])
+            info['latest_submission'] = sbmsn['CompletionDate'][0:10]
+        except:
+            info['num_of_submissions'] = 0
+            info['latest_submission'] = None
+        
+        response['Physics'].append(info);
     
-    return str(response)
+    return jsonify(response)
 
 @app.route('/quizzes')
 def quizzes():
@@ -85,4 +122,4 @@ def quizzes():
 
         response.append(info)
     
-    return str(response)
+    return jsonify(response)

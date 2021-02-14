@@ -14309,11 +14309,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony import */ var _Errors_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Errors.js */ "./js/api/Errors.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_1__);
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
 
 function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
 
 
 
@@ -14383,7 +14386,7 @@ var Request = /*#__PURE__*/function () {
       var _this = this;
 
       return new Promise(function (resolve, reject) {
-        axios[request](url, _this.data(), {
+        (axios__WEBPACK_IMPORTED_MODULE_1___default())[request](url, _this.data(), {
           headers: {
             'Content-Type': _this.contentType
           }
@@ -14798,25 +14801,31 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
-      items: {
-        'CPSC 329': [{
-          title: 'Worksheet 5',
-          submitted_on: '2/10/2021',
-          due_on: 'Tomorrow',
-          link: 'https://devcop.brightspace.com'
-        }],
-        'CPSC 359': [{
-          title: 'Project Part 1',
-          submitted_on: null,
-          due_on: '2/24/2021',
-          link: 'https://devcop.brightspace.com'
-        }],
-        'STAT 213': [{
-          title: 'Assignment 3',
-          submitted_on: '2/11/2021',
-          due_on: 'Tomorrow',
-          link: 'https://devcop.brightspace.com'
-        }]
+      loading: true,
+      items: {// 'CPSC 329': [
+        // 	{
+        // 		title: 'Worksheet 5',
+        // 		submitted_on: '2/10/2021',
+        // 		due_on: 'Tomorrow',
+        // 		link: 'https://devcop.brightspace.com'
+        // 	},
+        // ],
+        // 'CPSC 359': [
+        // 	{
+        // 		title: 'Project Part 1',
+        // 		submitted_on: null,
+        // 		due_on: '2/24/2021',
+        // 		link: 'https://devcop.brightspace.com'
+        // 	},
+        // ],
+        // 'STAT 213': [
+        // 	{
+        // 		title: 'Assignment 3',
+        // 		submitted_on: '2/11/2021',
+        // 		due_on: 'Tomorrow',
+        // 		link: 'https://devcop.brightspace.com'
+        // 	},
+        // ]
       }
     };
   },
@@ -14824,9 +14833,10 @@ __webpack_require__.r(__webpack_exports__);
     retrieve: function retrieve() {
       var _this = this;
 
-      request = new DropboxRequest({});
+      var request = new _api_DropboxRequest__WEBPACK_IMPORTED_MODULE_0__.default({});
       request.retrieve().then(function (response) {
-        _this.items = response.data;
+        _this.items = response;
+        _this.loading = false;
       });
     }
   },
@@ -17789,75 +17799,79 @@ var render = function() {
         _vm._m(0),
         _vm._v(" "),
         _vm._l(_vm.items, function(course, name) {
-          return _c("div", [
-            _c(
-              "h2",
-              {
-                staticClass: "w-full text-lg border-b mt-6 mb-2 py-2 font-bold"
-              },
-              [_vm._v(_vm._s(name))]
-            ),
-            _vm._v(" "),
-            _c(
-              "table",
-              { staticClass: "w-full" },
-              _vm._l(course, function(item) {
-                return _c("tr", [
-                  _c("td", { staticClass: "align-top w-1/2" }, [
-                    _c(
-                      "a",
-                      {
-                        staticClass: "text-xl",
-                        attrs: { href: item.link, target: "_blank" }
-                      },
-                      [_vm._v(_vm._s(item.title))]
-                    )
-                  ]),
-                  _vm._v(" "),
-                  _c("td", { staticClass: "align-top" }, [
-                    item.submitted_on
-                      ? _c("span", [
-                          _vm._v(
-                            _vm._s(item.num_of_submissions) + " submissions"
-                          )
+          return !_vm.loading
+            ? _c("div", [
+                _c(
+                  "h2",
+                  {
+                    staticClass:
+                      "w-full text-lg border-b mt-6 mb-2 py-2 font-bold"
+                  },
+                  [_vm._v(_vm._s(name))]
+                ),
+                _vm._v(" "),
+                _c(
+                  "table",
+                  { staticClass: "w-full" },
+                  _vm._l(course, function(item) {
+                    return _c("tr", [
+                      _c("td", { staticClass: "align-top w-1/2 py-4" }, [
+                        _c(
+                          "a",
+                          {
+                            staticClass: "text-xl",
+                            attrs: { target: "_blank" }
+                          },
+                          [_vm._v(_vm._s(item.title))]
+                        )
+                      ]),
+                      _vm._v(" "),
+                      _c("td", { staticClass: "align-top py-4" }, [
+                        item.latest_submission
+                          ? _c("span", [
+                              _vm._v(
+                                _vm._s(item.num_of_submissions) + " submissions"
+                              )
+                            ])
+                          : _vm._e(),
+                        _vm._v(" "),
+                        _c("br"),
+                        _vm._v(" "),
+                        item.latest_submission
+                          ? _c("span", [
+                              _vm._v(
+                                "Last Submitted: " +
+                                  _vm._s(item.latest_submission)
+                              )
+                            ])
+                          : _vm._e()
+                      ]),
+                      _vm._v(" "),
+                      _c("td", { staticClass: "text-right py-4" }, [
+                        !item.latest_submission
+                          ? _c("div", [
+                              _c(
+                                "button",
+                                {
+                                  staticClass:
+                                    "uppercase text-sm py-2 px-4 bg-blue-500 text-white rounded font-bold mb-2"
+                                },
+                                [_vm._v("Add to checklist")]
+                              )
+                            ])
+                          : _vm._e(),
+                        _vm._v(" "),
+                        _c("span", [
+                          _vm._v("Closed by "),
+                          _c("strong", [_vm._v(_vm._s(item.due_on))])
                         ])
-                      : _vm._e(),
-                    _vm._v(" "),
-                    _c("br"),
-                    _vm._v(" "),
-                    item.submitted_on
-                      ? _c("span", [
-                          _vm._v(
-                            "Last Submitted: " + _vm._s(item.latest_submission)
-                          )
-                        ])
-                      : _vm._e()
-                  ]),
-                  _vm._v(" "),
-                  _c("td", { staticClass: "text-right pb-4" }, [
-                    !item.submitted_on
-                      ? _c("div", [
-                          _c(
-                            "button",
-                            {
-                              staticClass:
-                                "uppercase text-sm py-2 px-4 bg-blue-500 text-white rounded font-bold mb-2"
-                            },
-                            [_vm._v("Add to checklist")]
-                          )
-                        ])
-                      : _vm._e(),
-                    _vm._v(" "),
-                    _c("span", [
-                      _vm._v("Closed by "),
-                      _c("strong", [_vm._v(_vm._s(item.due_on))])
+                      ])
                     ])
-                  ])
-                ])
-              }),
-              0
-            )
-          ])
+                  }),
+                  0
+                )
+              ])
+            : _vm._e()
         })
       ],
       2

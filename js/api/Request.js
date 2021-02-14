@@ -1,4 +1,5 @@
 import Errors from './Errors.js';
+import axios from 'axios';
 
 class Request {
     constructor(fields) {
