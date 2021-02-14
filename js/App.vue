@@ -48,6 +48,7 @@
 
 <script>
 import axios from 'axios';
+import oauth2 from 'client-oauth2';
 
 export default {
 	data() {
@@ -59,12 +60,13 @@ export default {
 
 	created() {
 		var config = {
-		method: 'get',
-		url: 'https://devcop.brightspace.com/d2l/api/lp/1.28/users/whoami',
-		headers: { 
-			'Authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6IjYzYzc5ZjIzLWZiMTAtNGI4YS1hMjdlLWI4YTc4NGJmNWI5MCJ9.eyJpc3MiOiJodHRwczovL2FwaS5icmlnaHRzcGFjZS5jb20vYXV0aCIsImF1ZCI6Imh0dHBzOi8vYXBpLmJyaWdodHNwYWNlLmNvbS9hdXRoL3Rva2VuIiwiZXhwIjoxNjEzMjg1NTI5LCJuYmYiOjE2MTMyODE5MjksInN1YiI6IjE5NSIsInRlbmFudGlkIjoiNTI3MzEzMTctMzcyYS00ZGI0LWI0OWQtNDk1MDJjZTQzZjJiIiwiYXpwIjoiNWQyNzQ1MGYtMmNlOS00ZGNlLTk1NzAtMGIyMzQ1ODBkZmRkIiwic2NvcGUiOiJjb250ZW50Oio6KiBjb3JlOio6KiBkYXRhaHViOio6KiBkaXNjdXNzaW9uczoqOiogZW5yb2xsbWVudDoqOiogZ3JhZGVzOio6KiBxdWl6emluZzoqOiogcmVwb3J0aW5nOio6KiByb2xlOio6KiB1c2VyczoqOioiLCJqdGkiOiIxNGI2Njk5Mi0xNTlhLTRmMzYtYTYyZi1kOTg5YzE4NDE4ZDIifQ.bKbpi3zugXsxh7QoLaKMYog4wYZEIML0E1xDg3KJI3QTuMet8RSmEWlo_aUN-XFULl_Bs2ZLcqzkWH9okdSLMcI_-WpZyAG53kaBi7tJIxHfRFmmWVQAZWYtXz8A4YqcUf-cs6U4kaqnlpSXb6doZKGXfTI8hMoVCOmzT_-YCZuWxGqALiTTzP6FRxj8xVk2pKnzZ3COAaI_5iMGd4w4ie-YlETmM0u3mPOBO3IJX1LnlYPZubnGNWOLpFG5aFZrFfXGDtQUxOAFgT2c5MU75izpOMWiZ1ADpS4Q97H8s3tduirKQSnuNfHO11uE33PLVfwEcnkGDOr0dcrVzg34Ow'
+			method: 'get',
+			url: 'https://devcop.brightspace.com/d2l/api/lp/1.28/users/whoami',
+			headers: { 
+				'Authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6IjYzYzc5ZjIzLWZiMTAtNGI4YS1hMjdlLWI4YTc4NGJmNWI5MCJ9.eyJpc3MiOiJodHRwczovL2FwaS5icmlnaHRzcGFjZS5jb20vYXV0aCIsImF1ZCI6Imh0dHBzOi8vYXBpLmJyaWdodHNwYWNlLmNvbS9hdXRoL3Rva2VuIiwiZXhwIjoxNjEzMjkxODkwLCJuYmYiOjE2MTMyODgyOTAsInN1YiI6IjE5NSIsInRlbmFudGlkIjoiNTI3MzEzMTctMzcyYS00ZGI0LWI0OWQtNDk1MDJjZTQzZjJiIiwiYXpwIjoiNWQyNzQ1MGYtMmNlOS00ZGNlLTk1NzAtMGIyMzQ1ODBkZmRkIiwic2NvcGUiOiJjb250ZW50Oio6KiBjb3JlOio6KiBkYXRhaHViOio6KiBkaXNjdXNzaW9uczoqOiogZW5yb2xsbWVudDoqOiogZ3JhZGVzOio6KiBxdWl6emluZzoqOiogcmVwb3J0aW5nOio6KiByb2xlOio6KiB1c2VyczoqOioiLCJqdGkiOiIwZjE0NjNmYy1jNzUxLTRjNmQtYTZmMS0yZmFmNjU1NGFlMjQifQ.RVyr11FfBbSoWHJ9gO4sLffGSyFeGQGI12BaQd5jftc1WSxW8vbGnHeh78HPNO6E-5yA0sz7aU2Z-9BrATDZ8PRec6A-cGKfr0MJJxeQT92XRaapXx84xo3w1yb0CL2x6H7Lgc7Nd6EQ0y9dv-ab_ALe_DBhtybPc5ArWIaWJKTMU6AfSeLBT02rjhjMitdjClQRUoqpcBuARCCnFmWa7m32TahWsu-mU10CsWnKgaw57nitHxNplIkc0d2x_e1JG1VVLWekx8yBFtt270SaxpgWKLoKhSD39xQTeSIl0EqdTOgmpZNXf-gWsNLJGBlGdwZTDCX02XOJnZmePL3FWQ',
+	  			'Cookie': 'ADRUM=s=1613250634620&r=https%3A%2F%2Fdevcop.brightspace.com%2Fd2l%2FsystemCheck%2Fwidget%3F0; d2lSessionVal=TKH40vprvvlOxHs5ZGSliFnXb; d2lSecureSessionVal=Y2iwueXFvbe2Ygxmc183PA5zw'
+			}
 		}
-		};
 
 		axios(config)
 		.then((response) => {

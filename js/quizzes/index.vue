@@ -28,12 +28,28 @@
 </template>
 
 <script>
-import axios from 'axios';
 
 export default {
 	data() {
 		return {
-
+			items: {
+				'CPSC 329': [
+					{
+						title: 'Quiz 1',
+						submitted_on: '2/11/2021',
+						due_on: 'Tomorrow',
+						link: 'https://devcop.brightspace.com'
+					},
+				],
+				'STAT 213': [
+					{
+						title: 'Lab Quiz 2',
+						submitted_on: '2/11/2021',
+						due_on: 'Tomorrow',
+						link: 'https://devcop.brightspace.com'
+					},
+				]
+			}
 		};
 	},
 }

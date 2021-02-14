@@ -1,6 +1,6 @@
 import Calendar from './calendar';
 import Checklist from './checklist';
-import Communication from './communication';
+import Communication from './quizzes';
 import Dropbox from './dropbox';
 
 

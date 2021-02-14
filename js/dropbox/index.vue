@@ -12,7 +12,9 @@
 							<a class="text-xl" :href="item.link" target="_blank">{{ item.title }}</a>
 						</td>
 						<td class="align-top">
-							<span v-if="item.submitted_on">Submitted: {{ item.submitted_on }}</span>
+							<span v-if="item.submitted_on">{{item.num_of_submissions}} submissions</span>
+							<br>
+							<span v-if="item.submitted_on">Last Submitted: {{ item.latest_submission }}</span>
 						</td>
 						<td class="text-right pb-4">
 							<div v-if="!item.submitted_on">
@@ -28,7 +30,7 @@
 </template>
 
 <script>
-import axios from 'axios';
+import Request from '../api/DropboxRequest';
 
 export default {
 	data() {
@@ -62,33 +64,19 @@ export default {
 		};
 	},
 
+
+	methods: {
+		retrieve() {
+			request = new DropboxRequest({});
+
+			request.retrieve().then(response => {
+		        this.items = response.data;
+		    });
+		}
+	},
+
 	created() {
-		
-
-		const token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6IjYzYzc5ZjIzLWZiMTAtNGI4YS1hMjdlLWI4YTc4NGJmNWI5MCJ9.eyJpc3MiOiJodHRwczovL2FwaS5icmlnaHRzcGFjZS5jb20vYXV0aCIsImF1ZCI6Imh0dHBzOi8vYXBpLmJyaWdodHNwYWNlLmNvbS9hdXRoL3Rva2VuIiwiZXhwIjoxNjEzMjU0MjM1LCJuYmYiOjE2MTMyNTA2MzUsInN1YiI6IjEyNTUiLCJ0ZW5hbnRpZCI6IjUyNzMxMzE3LTM3MmEtNGRiNC1iNDlkLTQ5NTAyY2U0M2YyYiIsImF6cCI6IjVkMjc0NTBmLTJjZTktNGRjZS05NTcwLTBiMjM0NTgwZGZkZCIsInNjb3BlIjoiY29udGVudDoqOiogY29yZToqOiogZGF0YWh1YjoqOiogZGlzY3Vzc2lvbnM6KjoqIGVucm9sbG1lbnQ6KjoqIGdyYWRlczoqOiogcXVpenppbmc6KjoqIHJlcG9ydGluZzoqOiogcm9sZToqOiogdXNlcnM6KjoqIiwianRpIjoiNGUyOTdkYTEtZDg4Ni00ODI3LTgyN2ItZmE4OGM0MWM5ZjExIn0.k4ndXz5MuMjwu20AXhb6kpOwfVy-iClslOsm7XglIrzO1TKBy1key-iO0MDOhNrAC5A4CpZyWUk3VtOLL8DAM-RGRSXYxEBXpJ8Hnbb2kgUVtBU9ZB7kagfulIRihH5lgEIX08smsokviWowZVT2pUNWxBFpIoJjCdIoXTJ5NAis0pVTPa0EzjELnNFuSuGk91X8Jpv5Gh7sFzDerm9rgjHCzi6it3hW--7Mxh4Rpge8dbEinbC3ugbj4YeCorkScTH65prXGyzbovX1cuNAqTyst0sRxNC7PG0F__d-OW7Q--SYckrYSdMkkg8Q19g2UpQI9pbzk23tGifeFGlHlQ"
-
-		// const instance = axios.create({
-  // 			baseURL: 'https://devcop.brightspace.com',
-	 //  		headers: {'Authorization': 'basic '+ token}
-		// });
-
-		// instance.get('/d2l/api/le/1.41/7855/dropbox/folders/')
-		// .then(response => {
-		// 	console.log(response.data);
-
-	 //    	return response.data;
-		// })
-		// 
-		const oauth = require('axios-oauth-client');
-		const getAuthorizationCode = oauth.client(axios.create(), {
-		  url: 'https://oauth.com/2.0/token',
-		  grant_type: 'authorization_code',
-		  client_id: 'foo',
-		  client_secret: 'bar',
-		  redirect_uri: '...',
-		  code: '...',
-		  scope: 'baz',
-		});
+		this.retrieve();
 	}
 }
 </script>

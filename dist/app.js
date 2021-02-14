@@ -12335,959 +12335,6 @@ var main = (0,_fullcalendar_common__WEBPACK_IMPORTED_MODULE_1__.createPlugin)({
 
 /***/ }),
 
-/***/ "./node_modules/axios-oauth-client/dist/client.js":
-/*!********************************************************!*\
-  !*** ./node_modules/axios-oauth-client/dist/client.js ***!
-  \********************************************************/
-/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
-
-"use strict";
-
-
-function _objectWithoutProperties(source, excluded) { if (source == null) return {}; var target = _objectWithoutPropertiesLoose(source, excluded); var key, i; if (Object.getOwnPropertySymbols) { var sourceSymbolKeys = Object.getOwnPropertySymbols(source); for (i = 0; i < sourceSymbolKeys.length; i++) { key = sourceSymbolKeys[i]; if (excluded.indexOf(key) >= 0) continue; if (!Object.prototype.propertyIsEnumerable.call(source, key)) continue; target[key] = source[key]; } } return target; }
-
-function _objectWithoutPropertiesLoose(source, excluded) { if (source == null) return {}; var target = {}; var sourceKeys = Object.keys(source); var key, i; for (i = 0; i < sourceKeys.length; i++) { key = sourceKeys[i]; if (excluded.indexOf(key) >= 0) continue; target[key] = source[key]; } return target; }
-
-var qs = __webpack_require__(/*! qs */ "./node_modules/axios-oauth-client/node_modules/qs/lib/index.js");
-
-module.exports = function (axios, _ref) {
-  var url = _ref.url,
-      credentials = _objectWithoutProperties(_ref, ["url"]);
-
-  var config = {
-    url: url,
-    method: 'post',
-    data: qs.stringify(credentials)
-  };
-  return function () {
-    return axios(config).then(function (res) {
-      return res.data;
-    });
-  };
-};
-
-/***/ }),
-
-/***/ "./node_modules/axios-oauth-client/dist/index.js":
-/*!*******************************************************!*\
-  !*** ./node_modules/axios-oauth-client/dist/index.js ***!
-  \*******************************************************/
-/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
-
-"use strict";
-
-
-module.exports = {
-  client: __webpack_require__(/*! ./client */ "./node_modules/axios-oauth-client/dist/client.js"),
-  interceptor: __webpack_require__(/*! ./interceptor */ "./node_modules/axios-oauth-client/dist/interceptor.js")
-};
-
-/***/ }),
-
-/***/ "./node_modules/axios-oauth-client/dist/interceptor.js":
-/*!*************************************************************!*\
-  !*** ./node_modules/axios-oauth-client/dist/interceptor.js ***!
-  \*************************************************************/
-/***/ ((module) => {
-
-"use strict";
-
-
-function getMaxAge(res) {
-  return res.expires_in * 1000;
-}
-
-function headerFormatter(res) {
-  return 'Bearer ' + res.access_token;
-}
-
-module.exports = function (tokenProvider, authenticate) {
-  var getToken = tokenProvider.tokenCache(authenticate, {
-    getMaxAge: getMaxAge
-  });
-  return tokenProvider({
-    getToken: getToken,
-    headerFormatter: headerFormatter
-  });
-};
-
-/***/ }),
-
-/***/ "./node_modules/axios-oauth-client/node_modules/qs/lib/formats.js":
-/*!************************************************************************!*\
-  !*** ./node_modules/axios-oauth-client/node_modules/qs/lib/formats.js ***!
-  \************************************************************************/
-/***/ ((module) => {
-
-"use strict";
-
-
-var replace = String.prototype.replace;
-var percentTwenties = /%20/g;
-
-var Format = {
-    RFC1738: 'RFC1738',
-    RFC3986: 'RFC3986'
-};
-
-module.exports = {
-    'default': Format.RFC3986,
-    formatters: {
-        RFC1738: function (value) {
-            return replace.call(value, percentTwenties, '+');
-        },
-        RFC3986: function (value) {
-            return String(value);
-        }
-    },
-    RFC1738: Format.RFC1738,
-    RFC3986: Format.RFC3986
-};
-
-
-/***/ }),
-
-/***/ "./node_modules/axios-oauth-client/node_modules/qs/lib/index.js":
-/*!**********************************************************************!*\
-  !*** ./node_modules/axios-oauth-client/node_modules/qs/lib/index.js ***!
-  \**********************************************************************/
-/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
-
-"use strict";
-
-
-var stringify = __webpack_require__(/*! ./stringify */ "./node_modules/axios-oauth-client/node_modules/qs/lib/stringify.js");
-var parse = __webpack_require__(/*! ./parse */ "./node_modules/axios-oauth-client/node_modules/qs/lib/parse.js");
-var formats = __webpack_require__(/*! ./formats */ "./node_modules/axios-oauth-client/node_modules/qs/lib/formats.js");
-
-module.exports = {
-    formats: formats,
-    parse: parse,
-    stringify: stringify
-};
-
-
-/***/ }),
-
-/***/ "./node_modules/axios-oauth-client/node_modules/qs/lib/parse.js":
-/*!**********************************************************************!*\
-  !*** ./node_modules/axios-oauth-client/node_modules/qs/lib/parse.js ***!
-  \**********************************************************************/
-/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
-
-"use strict";
-
-
-var utils = __webpack_require__(/*! ./utils */ "./node_modules/axios-oauth-client/node_modules/qs/lib/utils.js");
-
-var has = Object.prototype.hasOwnProperty;
-var isArray = Array.isArray;
-
-var defaults = {
-    allowDots: false,
-    allowPrototypes: false,
-    arrayLimit: 20,
-    charset: 'utf-8',
-    charsetSentinel: false,
-    comma: false,
-    decoder: utils.decode,
-    delimiter: '&',
-    depth: 5,
-    ignoreQueryPrefix: false,
-    interpretNumericEntities: false,
-    parameterLimit: 1000,
-    parseArrays: true,
-    plainObjects: false,
-    strictNullHandling: false
-};
-
-var interpretNumericEntities = function (str) {
-    return str.replace(/&#(\d+);/g, function ($0, numberStr) {
-        return String.fromCharCode(parseInt(numberStr, 10));
-    });
-};
-
-var parseArrayValue = function (val, options) {
-    if (val && typeof val === 'string' && options.comma && val.indexOf(',') > -1) {
-        return val.split(',');
-    }
-
-    return val;
-};
-
-// This is what browsers will submit when the ✓ character occurs in an
-// application/x-www-form-urlencoded body and the encoding of the page containing
-// the form is iso-8859-1, or when the submitted form has an accept-charset
-// attribute of iso-8859-1. Presumably also with other charsets that do not contain
-// the ✓ character, such as us-ascii.
-var isoSentinel = 'utf8=%26%2310003%3B'; // encodeURIComponent('&#10003;')
-
-// These are the percent-encoded utf-8 octets representing a checkmark, indicating that the request actually is utf-8 encoded.
-var charsetSentinel = 'utf8=%E2%9C%93'; // encodeURIComponent('✓')
-
-var parseValues = function parseQueryStringValues(str, options) {
-    var obj = {};
-    var cleanStr = options.ignoreQueryPrefix ? str.replace(/^\?/, '') : str;
-    var limit = options.parameterLimit === Infinity ? undefined : options.parameterLimit;
-    var parts = cleanStr.split(options.delimiter, limit);
-    var skipIndex = -1; // Keep track of where the utf8 sentinel was found
-    var i;
-
-    var charset = options.charset;
-    if (options.charsetSentinel) {
-        for (i = 0; i < parts.length; ++i) {
-            if (parts[i].indexOf('utf8=') === 0) {
-                if (parts[i] === charsetSentinel) {
-                    charset = 'utf-8';
-                } else if (parts[i] === isoSentinel) {
-                    charset = 'iso-8859-1';
-                }
-                skipIndex = i;
-                i = parts.length; // The eslint settings do not allow break;
-            }
-        }
-    }
-
-    for (i = 0; i < parts.length; ++i) {
-        if (i === skipIndex) {
-            continue;
-        }
-        var part = parts[i];
-
-        var bracketEqualsPos = part.indexOf(']=');
-        var pos = bracketEqualsPos === -1 ? part.indexOf('=') : bracketEqualsPos + 1;
-
-        var key, val;
-        if (pos === -1) {
-            key = options.decoder(part, defaults.decoder, charset, 'key');
-            val = options.strictNullHandling ? null : '';
-        } else {
-            key = options.decoder(part.slice(0, pos), defaults.decoder, charset, 'key');
-            val = utils.maybeMap(
-                parseArrayValue(part.slice(pos + 1), options),
-                function (encodedVal) {
-                    return options.decoder(encodedVal, defaults.decoder, charset, 'value');
-                }
-            );
-        }
-
-        if (val && options.interpretNumericEntities && charset === 'iso-8859-1') {
-            val = interpretNumericEntities(val);
-        }
-
-        if (part.indexOf('[]=') > -1) {
-            val = isArray(val) ? [val] : val;
-        }
-
-        if (has.call(obj, key)) {
-            obj[key] = utils.combine(obj[key], val);
-        } else {
-            obj[key] = val;
-        }
-    }
-
-    return obj;
-};
-
-var parseObject = function (chain, val, options, valuesParsed) {
-    var leaf = valuesParsed ? val : parseArrayValue(val, options);
-
-    for (var i = chain.length - 1; i >= 0; --i) {
-        var obj;
-        var root = chain[i];
-
-        if (root === '[]' && options.parseArrays) {
-            obj = [].concat(leaf);
-        } else {
-            obj = options.plainObjects ? Object.create(null) : {};
-            var cleanRoot = root.charAt(0) === '[' && root.charAt(root.length - 1) === ']' ? root.slice(1, -1) : root;
-            var index = parseInt(cleanRoot, 10);
-            if (!options.parseArrays && cleanRoot === '') {
-                obj = { 0: leaf };
-            } else if (
-                !isNaN(index)
-                && root !== cleanRoot
-                && String(index) === cleanRoot
-                && index >= 0
-                && (options.parseArrays && index <= options.arrayLimit)
-            ) {
-                obj = [];
-                obj[index] = leaf;
-            } else {
-                obj[cleanRoot] = leaf;
-            }
-        }
-
-        leaf = obj;
-    }
-
-    return leaf;
-};
-
-var parseKeys = function parseQueryStringKeys(givenKey, val, options, valuesParsed) {
-    if (!givenKey) {
-        return;
-    }
-
-    // Transform dot notation to bracket notation
-    var key = options.allowDots ? givenKey.replace(/\.([^.[]+)/g, '[$1]') : givenKey;
-
-    // The regex chunks
-
-    var brackets = /(\[[^[\]]*])/;
-    var child = /(\[[^[\]]*])/g;
-
-    // Get the parent
-
-    var segment = options.depth > 0 && brackets.exec(key);
-    var parent = segment ? key.slice(0, segment.index) : key;
-
-    // Stash the parent if it exists
-
-    var keys = [];
-    if (parent) {
-        // If we aren't using plain objects, optionally prefix keys that would overwrite object prototype properties
-        if (!options.plainObjects && has.call(Object.prototype, parent)) {
-            if (!options.allowPrototypes) {
-                return;
-            }
-        }
-
-        keys.push(parent);
-    }
-
-    // Loop through children appending to the array until we hit depth
-
-    var i = 0;
-    while (options.depth > 0 && (segment = child.exec(key)) !== null && i < options.depth) {
-        i += 1;
-        if (!options.plainObjects && has.call(Object.prototype, segment[1].slice(1, -1))) {
-            if (!options.allowPrototypes) {
-                return;
-            }
-        }
-        keys.push(segment[1]);
-    }
-
-    // If there's a remainder, just add whatever is left
-
-    if (segment) {
-        keys.push('[' + key.slice(segment.index) + ']');
-    }
-
-    return parseObject(keys, val, options, valuesParsed);
-};
-
-var normalizeParseOptions = function normalizeParseOptions(opts) {
-    if (!opts) {
-        return defaults;
-    }
-
-    if (opts.decoder !== null && opts.decoder !== undefined && typeof opts.decoder !== 'function') {
-        throw new TypeError('Decoder has to be a function.');
-    }
-
-    if (typeof opts.charset !== 'undefined' && opts.charset !== 'utf-8' && opts.charset !== 'iso-8859-1') {
-        throw new TypeError('The charset option must be either utf-8, iso-8859-1, or undefined');
-    }
-    var charset = typeof opts.charset === 'undefined' ? defaults.charset : opts.charset;
-
-    return {
-        allowDots: typeof opts.allowDots === 'undefined' ? defaults.allowDots : !!opts.allowDots,
-        allowPrototypes: typeof opts.allowPrototypes === 'boolean' ? opts.allowPrototypes : defaults.allowPrototypes,
-        arrayLimit: typeof opts.arrayLimit === 'number' ? opts.arrayLimit : defaults.arrayLimit,
-        charset: charset,
-        charsetSentinel: typeof opts.charsetSentinel === 'boolean' ? opts.charsetSentinel : defaults.charsetSentinel,
-        comma: typeof opts.comma === 'boolean' ? opts.comma : defaults.comma,
-        decoder: typeof opts.decoder === 'function' ? opts.decoder : defaults.decoder,
-        delimiter: typeof opts.delimiter === 'string' || utils.isRegExp(opts.delimiter) ? opts.delimiter : defaults.delimiter,
-        // eslint-disable-next-line no-implicit-coercion, no-extra-parens
-        depth: (typeof opts.depth === 'number' || opts.depth === false) ? +opts.depth : defaults.depth,
-        ignoreQueryPrefix: opts.ignoreQueryPrefix === true,
-        interpretNumericEntities: typeof opts.interpretNumericEntities === 'boolean' ? opts.interpretNumericEntities : defaults.interpretNumericEntities,
-        parameterLimit: typeof opts.parameterLimit === 'number' ? opts.parameterLimit : defaults.parameterLimit,
-        parseArrays: opts.parseArrays !== false,
-        plainObjects: typeof opts.plainObjects === 'boolean' ? opts.plainObjects : defaults.plainObjects,
-        strictNullHandling: typeof opts.strictNullHandling === 'boolean' ? opts.strictNullHandling : defaults.strictNullHandling
-    };
-};
-
-module.exports = function (str, opts) {
-    var options = normalizeParseOptions(opts);
-
-    if (str === '' || str === null || typeof str === 'undefined') {
-        return options.plainObjects ? Object.create(null) : {};
-    }
-
-    var tempObj = typeof str === 'string' ? parseValues(str, options) : str;
-    var obj = options.plainObjects ? Object.create(null) : {};
-
-    // Iterate over the keys and setup the new object
-
-    var keys = Object.keys(tempObj);
-    for (var i = 0; i < keys.length; ++i) {
-        var key = keys[i];
-        var newObj = parseKeys(key, tempObj[key], options, typeof str === 'string');
-        obj = utils.merge(obj, newObj, options);
-    }
-
-    return utils.compact(obj);
-};
-
-
-/***/ }),
-
-/***/ "./node_modules/axios-oauth-client/node_modules/qs/lib/stringify.js":
-/*!**************************************************************************!*\
-  !*** ./node_modules/axios-oauth-client/node_modules/qs/lib/stringify.js ***!
-  \**************************************************************************/
-/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
-
-"use strict";
-
-
-var utils = __webpack_require__(/*! ./utils */ "./node_modules/axios-oauth-client/node_modules/qs/lib/utils.js");
-var formats = __webpack_require__(/*! ./formats */ "./node_modules/axios-oauth-client/node_modules/qs/lib/formats.js");
-var has = Object.prototype.hasOwnProperty;
-
-var arrayPrefixGenerators = {
-    brackets: function brackets(prefix) {
-        return prefix + '[]';
-    },
-    comma: 'comma',
-    indices: function indices(prefix, key) {
-        return prefix + '[' + key + ']';
-    },
-    repeat: function repeat(prefix) {
-        return prefix;
-    }
-};
-
-var isArray = Array.isArray;
-var push = Array.prototype.push;
-var pushToArray = function (arr, valueOrArray) {
-    push.apply(arr, isArray(valueOrArray) ? valueOrArray : [valueOrArray]);
-};
-
-var toISO = Date.prototype.toISOString;
-
-var defaultFormat = formats['default'];
-var defaults = {
-    addQueryPrefix: false,
-    allowDots: false,
-    charset: 'utf-8',
-    charsetSentinel: false,
-    delimiter: '&',
-    encode: true,
-    encoder: utils.encode,
-    encodeValuesOnly: false,
-    format: defaultFormat,
-    formatter: formats.formatters[defaultFormat],
-    // deprecated
-    indices: false,
-    serializeDate: function serializeDate(date) {
-        return toISO.call(date);
-    },
-    skipNulls: false,
-    strictNullHandling: false
-};
-
-var isNonNullishPrimitive = function isNonNullishPrimitive(v) {
-    return typeof v === 'string'
-        || typeof v === 'number'
-        || typeof v === 'boolean'
-        || typeof v === 'symbol'
-        || typeof v === 'bigint';
-};
-
-var stringify = function stringify(
-    object,
-    prefix,
-    generateArrayPrefix,
-    strictNullHandling,
-    skipNulls,
-    encoder,
-    filter,
-    sort,
-    allowDots,
-    serializeDate,
-    format,
-    formatter,
-    encodeValuesOnly,
-    charset
-) {
-    var obj = object;
-    if (typeof filter === 'function') {
-        obj = filter(prefix, obj);
-    } else if (obj instanceof Date) {
-        obj = serializeDate(obj);
-    } else if (generateArrayPrefix === 'comma' && isArray(obj)) {
-        obj = utils.maybeMap(obj, function (value) {
-            if (value instanceof Date) {
-                return serializeDate(value);
-            }
-            return value;
-        });
-    }
-
-    if (obj === null) {
-        if (strictNullHandling) {
-            return encoder && !encodeValuesOnly ? encoder(prefix, defaults.encoder, charset, 'key', format) : prefix;
-        }
-
-        obj = '';
-    }
-
-    if (isNonNullishPrimitive(obj) || utils.isBuffer(obj)) {
-        if (encoder) {
-            var keyValue = encodeValuesOnly ? prefix : encoder(prefix, defaults.encoder, charset, 'key', format);
-            return [formatter(keyValue) + '=' + formatter(encoder(obj, defaults.encoder, charset, 'value', format))];
-        }
-        return [formatter(prefix) + '=' + formatter(String(obj))];
-    }
-
-    var values = [];
-
-    if (typeof obj === 'undefined') {
-        return values;
-    }
-
-    var objKeys;
-    if (generateArrayPrefix === 'comma' && isArray(obj)) {
-        // we need to join elements in
-        objKeys = [{ value: obj.length > 0 ? obj.join(',') || null : undefined }];
-    } else if (isArray(filter)) {
-        objKeys = filter;
-    } else {
-        var keys = Object.keys(obj);
-        objKeys = sort ? keys.sort(sort) : keys;
-    }
-
-    for (var i = 0; i < objKeys.length; ++i) {
-        var key = objKeys[i];
-        var value = typeof key === 'object' && key.value !== undefined ? key.value : obj[key];
-
-        if (skipNulls && value === null) {
-            continue;
-        }
-
-        var keyPrefix = isArray(obj)
-            ? typeof generateArrayPrefix === 'function' ? generateArrayPrefix(prefix, key) : prefix
-            : prefix + (allowDots ? '.' + key : '[' + key + ']');
-
-        pushToArray(values, stringify(
-            value,
-            keyPrefix,
-            generateArrayPrefix,
-            strictNullHandling,
-            skipNulls,
-            encoder,
-            filter,
-            sort,
-            allowDots,
-            serializeDate,
-            format,
-            formatter,
-            encodeValuesOnly,
-            charset
-        ));
-    }
-
-    return values;
-};
-
-var normalizeStringifyOptions = function normalizeStringifyOptions(opts) {
-    if (!opts) {
-        return defaults;
-    }
-
-    if (opts.encoder !== null && opts.encoder !== undefined && typeof opts.encoder !== 'function') {
-        throw new TypeError('Encoder has to be a function.');
-    }
-
-    var charset = opts.charset || defaults.charset;
-    if (typeof opts.charset !== 'undefined' && opts.charset !== 'utf-8' && opts.charset !== 'iso-8859-1') {
-        throw new TypeError('The charset option must be either utf-8, iso-8859-1, or undefined');
-    }
-
-    var format = formats['default'];
-    if (typeof opts.format !== 'undefined') {
-        if (!has.call(formats.formatters, opts.format)) {
-            throw new TypeError('Unknown format option provided.');
-        }
-        format = opts.format;
-    }
-    var formatter = formats.formatters[format];
-
-    var filter = defaults.filter;
-    if (typeof opts.filter === 'function' || isArray(opts.filter)) {
-        filter = opts.filter;
-    }
-
-    return {
-        addQueryPrefix: typeof opts.addQueryPrefix === 'boolean' ? opts.addQueryPrefix : defaults.addQueryPrefix,
-        allowDots: typeof opts.allowDots === 'undefined' ? defaults.allowDots : !!opts.allowDots,
-        charset: charset,
-        charsetSentinel: typeof opts.charsetSentinel === 'boolean' ? opts.charsetSentinel : defaults.charsetSentinel,
-        delimiter: typeof opts.delimiter === 'undefined' ? defaults.delimiter : opts.delimiter,
-        encode: typeof opts.encode === 'boolean' ? opts.encode : defaults.encode,
-        encoder: typeof opts.encoder === 'function' ? opts.encoder : defaults.encoder,
-        encodeValuesOnly: typeof opts.encodeValuesOnly === 'boolean' ? opts.encodeValuesOnly : defaults.encodeValuesOnly,
-        filter: filter,
-        format: format,
-        formatter: formatter,
-        serializeDate: typeof opts.serializeDate === 'function' ? opts.serializeDate : defaults.serializeDate,
-        skipNulls: typeof opts.skipNulls === 'boolean' ? opts.skipNulls : defaults.skipNulls,
-        sort: typeof opts.sort === 'function' ? opts.sort : null,
-        strictNullHandling: typeof opts.strictNullHandling === 'boolean' ? opts.strictNullHandling : defaults.strictNullHandling
-    };
-};
-
-module.exports = function (object, opts) {
-    var obj = object;
-    var options = normalizeStringifyOptions(opts);
-
-    var objKeys;
-    var filter;
-
-    if (typeof options.filter === 'function') {
-        filter = options.filter;
-        obj = filter('', obj);
-    } else if (isArray(options.filter)) {
-        filter = options.filter;
-        objKeys = filter;
-    }
-
-    var keys = [];
-
-    if (typeof obj !== 'object' || obj === null) {
-        return '';
-    }
-
-    var arrayFormat;
-    if (opts && opts.arrayFormat in arrayPrefixGenerators) {
-        arrayFormat = opts.arrayFormat;
-    } else if (opts && 'indices' in opts) {
-        arrayFormat = opts.indices ? 'indices' : 'repeat';
-    } else {
-        arrayFormat = 'indices';
-    }
-
-    var generateArrayPrefix = arrayPrefixGenerators[arrayFormat];
-
-    if (!objKeys) {
-        objKeys = Object.keys(obj);
-    }
-
-    if (options.sort) {
-        objKeys.sort(options.sort);
-    }
-
-    for (var i = 0; i < objKeys.length; ++i) {
-        var key = objKeys[i];
-
-        if (options.skipNulls && obj[key] === null) {
-            continue;
-        }
-        pushToArray(keys, stringify(
-            obj[key],
-            key,
-            generateArrayPrefix,
-            options.strictNullHandling,
-            options.skipNulls,
-            options.encode ? options.encoder : null,
-            options.filter,
-            options.sort,
-            options.allowDots,
-            options.serializeDate,
-            options.format,
-            options.formatter,
-            options.encodeValuesOnly,
-            options.charset
-        ));
-    }
-
-    var joined = keys.join(options.delimiter);
-    var prefix = options.addQueryPrefix === true ? '?' : '';
-
-    if (options.charsetSentinel) {
-        if (options.charset === 'iso-8859-1') {
-            // encodeURIComponent('&#10003;'), the "numeric entity" representation of a checkmark
-            prefix += 'utf8=%26%2310003%3B&';
-        } else {
-            // encodeURIComponent('✓')
-            prefix += 'utf8=%E2%9C%93&';
-        }
-    }
-
-    return joined.length > 0 ? prefix + joined : '';
-};
-
-
-/***/ }),
-
-/***/ "./node_modules/axios-oauth-client/node_modules/qs/lib/utils.js":
-/*!**********************************************************************!*\
-  !*** ./node_modules/axios-oauth-client/node_modules/qs/lib/utils.js ***!
-  \**********************************************************************/
-/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
-
-"use strict";
-
-
-var formats = __webpack_require__(/*! ./formats */ "./node_modules/axios-oauth-client/node_modules/qs/lib/formats.js");
-
-var has = Object.prototype.hasOwnProperty;
-var isArray = Array.isArray;
-
-var hexTable = (function () {
-    var array = [];
-    for (var i = 0; i < 256; ++i) {
-        array.push('%' + ((i < 16 ? '0' : '') + i.toString(16)).toUpperCase());
-    }
-
-    return array;
-}());
-
-var compactQueue = function compactQueue(queue) {
-    while (queue.length > 1) {
-        var item = queue.pop();
-        var obj = item.obj[item.prop];
-
-        if (isArray(obj)) {
-            var compacted = [];
-
-            for (var j = 0; j < obj.length; ++j) {
-                if (typeof obj[j] !== 'undefined') {
-                    compacted.push(obj[j]);
-                }
-            }
-
-            item.obj[item.prop] = compacted;
-        }
-    }
-};
-
-var arrayToObject = function arrayToObject(source, options) {
-    var obj = options && options.plainObjects ? Object.create(null) : {};
-    for (var i = 0; i < source.length; ++i) {
-        if (typeof source[i] !== 'undefined') {
-            obj[i] = source[i];
-        }
-    }
-
-    return obj;
-};
-
-var merge = function merge(target, source, options) {
-    /* eslint no-param-reassign: 0 */
-    if (!source) {
-        return target;
-    }
-
-    if (typeof source !== 'object') {
-        if (isArray(target)) {
-            target.push(source);
-        } else if (target && typeof target === 'object') {
-            if ((options && (options.plainObjects || options.allowPrototypes)) || !has.call(Object.prototype, source)) {
-                target[source] = true;
-            }
-        } else {
-            return [target, source];
-        }
-
-        return target;
-    }
-
-    if (!target || typeof target !== 'object') {
-        return [target].concat(source);
-    }
-
-    var mergeTarget = target;
-    if (isArray(target) && !isArray(source)) {
-        mergeTarget = arrayToObject(target, options);
-    }
-
-    if (isArray(target) && isArray(source)) {
-        source.forEach(function (item, i) {
-            if (has.call(target, i)) {
-                var targetItem = target[i];
-                if (targetItem && typeof targetItem === 'object' && item && typeof item === 'object') {
-                    target[i] = merge(targetItem, item, options);
-                } else {
-                    target.push(item);
-                }
-            } else {
-                target[i] = item;
-            }
-        });
-        return target;
-    }
-
-    return Object.keys(source).reduce(function (acc, key) {
-        var value = source[key];
-
-        if (has.call(acc, key)) {
-            acc[key] = merge(acc[key], value, options);
-        } else {
-            acc[key] = value;
-        }
-        return acc;
-    }, mergeTarget);
-};
-
-var assign = function assignSingleSource(target, source) {
-    return Object.keys(source).reduce(function (acc, key) {
-        acc[key] = source[key];
-        return acc;
-    }, target);
-};
-
-var decode = function (str, decoder, charset) {
-    var strWithoutPlus = str.replace(/\+/g, ' ');
-    if (charset === 'iso-8859-1') {
-        // unescape never throws, no try...catch needed:
-        return strWithoutPlus.replace(/%[0-9a-f]{2}/gi, unescape);
-    }
-    // utf-8
-    try {
-        return decodeURIComponent(strWithoutPlus);
-    } catch (e) {
-        return strWithoutPlus;
-    }
-};
-
-var encode = function encode(str, defaultEncoder, charset, kind, format) {
-    // This code was originally written by Brian White (mscdex) for the io.js core querystring library.
-    // It has been adapted here for stricter adherence to RFC 3986
-    if (str.length === 0) {
-        return str;
-    }
-
-    var string = str;
-    if (typeof str === 'symbol') {
-        string = Symbol.prototype.toString.call(str);
-    } else if (typeof str !== 'string') {
-        string = String(str);
-    }
-
-    if (charset === 'iso-8859-1') {
-        return escape(string).replace(/%u[0-9a-f]{4}/gi, function ($0) {
-            return '%26%23' + parseInt($0.slice(2), 16) + '%3B';
-        });
-    }
-
-    var out = '';
-    for (var i = 0; i < string.length; ++i) {
-        var c = string.charCodeAt(i);
-
-        if (
-            c === 0x2D // -
-            || c === 0x2E // .
-            || c === 0x5F // _
-            || c === 0x7E // ~
-            || (c >= 0x30 && c <= 0x39) // 0-9
-            || (c >= 0x41 && c <= 0x5A) // a-z
-            || (c >= 0x61 && c <= 0x7A) // A-Z
-            || (format === formats.RFC1738 && (c === 0x28 || c === 0x29)) // ( )
-        ) {
-            out += string.charAt(i);
-            continue;
-        }
-
-        if (c < 0x80) {
-            out = out + hexTable[c];
-            continue;
-        }
-
-        if (c < 0x800) {
-            out = out + (hexTable[0xC0 | (c >> 6)] + hexTable[0x80 | (c & 0x3F)]);
-            continue;
-        }
-
-        if (c < 0xD800 || c >= 0xE000) {
-            out = out + (hexTable[0xE0 | (c >> 12)] + hexTable[0x80 | ((c >> 6) & 0x3F)] + hexTable[0x80 | (c & 0x3F)]);
-            continue;
-        }
-
-        i += 1;
-        c = 0x10000 + (((c & 0x3FF) << 10) | (string.charCodeAt(i) & 0x3FF));
-        out += hexTable[0xF0 | (c >> 18)]
-            + hexTable[0x80 | ((c >> 12) & 0x3F)]
-            + hexTable[0x80 | ((c >> 6) & 0x3F)]
-            + hexTable[0x80 | (c & 0x3F)];
-    }
-
-    return out;
-};
-
-var compact = function compact(value) {
-    var queue = [{ obj: { o: value }, prop: 'o' }];
-    var refs = [];
-
-    for (var i = 0; i < queue.length; ++i) {
-        var item = queue[i];
-        var obj = item.obj[item.prop];
-
-        var keys = Object.keys(obj);
-        for (var j = 0; j < keys.length; ++j) {
-            var key = keys[j];
-            var val = obj[key];
-            if (typeof val === 'object' && val !== null && refs.indexOf(val) === -1) {
-                queue.push({ obj: obj, prop: key });
-                refs.push(val);
-            }
-        }
-    }
-
-    compactQueue(queue);
-
-    return value;
-};
-
-var isRegExp = function isRegExp(obj) {
-    return Object.prototype.toString.call(obj) === '[object RegExp]';
-};
-
-var isBuffer = function isBuffer(obj) {
-    if (!obj || typeof obj !== 'object') {
-        return false;
-    }
-
-    return !!(obj.constructor && obj.constructor.isBuffer && obj.constructor.isBuffer(obj));
-};
-
-var combine = function combine(a, b) {
-    return [].concat(a, b);
-};
-
-var maybeMap = function maybeMap(val, fn) {
-    if (isArray(val)) {
-        var mapped = [];
-        for (var i = 0; i < val.length; i += 1) {
-            mapped.push(fn(val[i]));
-        }
-        return mapped;
-    }
-    return fn(val);
-};
-
-module.exports = {
-    arrayToObject: arrayToObject,
-    assign: assign,
-    combine: combine,
-    compact: compact,
-    decode: decode,
-    encode: encode,
-    isBuffer: isBuffer,
-    isRegExp: isRegExp,
-    maybeMap: maybeMap,
-    merge: merge
-};
-
-
-/***/ }),
-
 /***/ "./node_modules/axios/index.js":
 /*!*************************************!*\
   !*** ./node_modules/axios/index.js ***!
@@ -15121,6 +14168,264 @@ module.exports = {
 
 /***/ }),
 
+/***/ "./js/api/DropboxRequest.js":
+/*!**********************************!*\
+  !*** ./js/api/DropboxRequest.js ***!
+  \**********************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _Request__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Request */ "./js/api/Request.js");
+function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Date.prototype.toString.call(Reflect.construct(Date, [], function () {})); return true; } catch (e) { return false; } }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+
+
+var DropboxRequest = /*#__PURE__*/function (_Request) {
+  _inherits(DropboxRequest, _Request);
+
+  var _super = _createSuper(DropboxRequest);
+
+  function DropboxRequest() {
+    _classCallCheck(this, DropboxRequest);
+
+    return _super.apply(this, arguments);
+  }
+
+  _createClass(DropboxRequest, [{
+    key: "retrieve",
+    value: function retrieve() {
+      return this.get('http://127.0.0.1:5000/dropboxes');
+    }
+  }, {
+    key: "destroy",
+    value: function destroy(id) {
+      return this["delete"]('http://127.0.0.1:5000/dropboxes/' + id);
+    }
+  }]);
+
+  return DropboxRequest;
+}(_Request__WEBPACK_IMPORTED_MODULE_0__.default);
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (DropboxRequest);
+
+/***/ }),
+
+/***/ "./js/api/Errors.js":
+/*!**************************!*\
+  !*** ./js/api/Errors.js ***!
+  \**************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+var Errors = /*#__PURE__*/function () {
+  function Errors() {
+    _classCallCheck(this, Errors);
+
+    this.errors = {};
+  }
+
+  _createClass(Errors, [{
+    key: "has",
+    value: function has(field) {
+      return this.errors.hasOwnProperty(field);
+    }
+  }, {
+    key: "get",
+    value: function get(field) {
+      return this.errors[field];
+    }
+  }, {
+    key: "record",
+    value: function record(errors) {
+      this.errors = errors;
+    }
+  }, {
+    key: "any",
+    value: function any() {
+      return Object.keys(this.errors).length > 0;
+    }
+  }, {
+    key: "clear",
+    value: function clear(field) {
+      if (field) {
+        delete this.errors[field];
+        return;
+      }
+
+      this.errors = {};
+    }
+  }]);
+
+  return Errors;
+}();
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Errors);
+
+/***/ }),
+
+/***/ "./js/api/Request.js":
+/*!***************************!*\
+  !*** ./js/api/Request.js ***!
+  \***************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _Errors_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Errors.js */ "./js/api/Errors.js");
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+
+
+var Request = /*#__PURE__*/function () {
+  function Request(fields) {
+    _classCallCheck(this, Request);
+
+    this.setFields(fields);
+    this.setContentType('application/json');
+  }
+
+  _createClass(Request, [{
+    key: "setContentType",
+    value: function setContentType(contentType) {
+      this.contentType = contentType;
+    }
+  }, {
+    key: "setFields",
+    value: function setFields(fields) {
+      this.fieldData = fields;
+
+      for (var field in fields) {
+        this[field] = fields[field];
+      }
+
+      this.errors = new _Errors_js__WEBPACK_IMPORTED_MODULE_0__.default();
+    }
+  }, {
+    key: "data",
+    value: function data() {
+      var data = {};
+
+      for (var field in this.fieldData) {
+        data[field] = this[field];
+      }
+
+      return data;
+    }
+  }, {
+    key: "get",
+    value: function get(url) {
+      return this.submit('get', url);
+    }
+  }, {
+    key: "patch",
+    value: function patch(url) {
+      return this.submit('patch', url);
+    }
+  }, {
+    key: "post",
+    value: function post(url) {
+      return this.submit('post', url);
+    }
+  }, {
+    key: "put",
+    value: function put(url) {
+      return this.submit('put', url);
+    }
+  }, {
+    key: "delete",
+    value: function _delete(url) {
+      return this.submit('delete', url);
+    }
+  }, {
+    key: "submit",
+    value: function submit(request, url) {
+      var _this = this;
+
+      return new Promise(function (resolve, reject) {
+        axios[request](url, _this.data(), {
+          headers: {
+            'Content-Type': _this.contentType
+          }
+        }).then(function (response) {
+          _this.onSuccess();
+
+          resolve(response.data);
+        })["catch"](function (error) {
+          _this.onFail(error.response.data.errors);
+
+          reject(error.response.data);
+        });
+      });
+    }
+  }, {
+    key: "clear",
+    value: function clear() {
+      for (var field in this.fieldData) {
+        this[field] = '';
+      }
+
+      this.errors.clear();
+    }
+  }, {
+    key: "onSuccess",
+    value: function onSuccess() {
+      this.clear();
+    }
+  }, {
+    key: "onFail",
+    value: function onFail(errors) {
+      this.errors.record(errors);
+    }
+  }]);
+
+  return Request;
+}();
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Request);
+
+/***/ }),
+
 /***/ "./js/app.js":
 /*!*******************!*\
   !*** ./js/app.js ***!
@@ -15170,7 +14475,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _calendar__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./calendar */ "./js/calendar/index.vue");
 /* harmony import */ var _checklist__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./checklist */ "./js/checklist/index.vue");
-/* harmony import */ var _communication__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./communication */ "./js/communication/index.vue");
+/* harmony import */ var _quizzes__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./quizzes */ "./js/quizzes/index.vue");
 /* harmony import */ var _dropbox__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./dropbox */ "./js/dropbox/index.vue");
 
 
@@ -15184,7 +14489,7 @@ var routes = [{
   component: _checklist__WEBPACK_IMPORTED_MODULE_1__.default
 }, {
   path: '/communication',
-  component: _communication__WEBPACK_IMPORTED_MODULE_2__.default
+  component: _quizzes__WEBPACK_IMPORTED_MODULE_2__.default
 }, {
   path: '/dropbox',
   component: _dropbox__WEBPACK_IMPORTED_MODULE_3__.default
@@ -15206,6 +14511,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var client_oauth2__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! client-oauth2 */ "./node_modules/client-oauth2/src/client-oauth2.js");
+/* harmony import */ var client_oauth2__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(client_oauth2__WEBPACK_IMPORTED_MODULE_1__);
 //
 //
 //
@@ -15254,6 +14561,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
@@ -15269,7 +14577,8 @@ __webpack_require__.r(__webpack_exports__);
       method: 'get',
       url: 'https://devcop.brightspace.com/d2l/api/lp/1.28/users/whoami',
       headers: {
-        'Authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6IjYzYzc5ZjIzLWZiMTAtNGI4YS1hMjdlLWI4YTc4NGJmNWI5MCJ9.eyJpc3MiOiJodHRwczovL2FwaS5icmlnaHRzcGFjZS5jb20vYXV0aCIsImF1ZCI6Imh0dHBzOi8vYXBpLmJyaWdodHNwYWNlLmNvbS9hdXRoL3Rva2VuIiwiZXhwIjoxNjEzMjg1NTI5LCJuYmYiOjE2MTMyODE5MjksInN1YiI6IjE5NSIsInRlbmFudGlkIjoiNTI3MzEzMTctMzcyYS00ZGI0LWI0OWQtNDk1MDJjZTQzZjJiIiwiYXpwIjoiNWQyNzQ1MGYtMmNlOS00ZGNlLTk1NzAtMGIyMzQ1ODBkZmRkIiwic2NvcGUiOiJjb250ZW50Oio6KiBjb3JlOio6KiBkYXRhaHViOio6KiBkaXNjdXNzaW9uczoqOiogZW5yb2xsbWVudDoqOiogZ3JhZGVzOio6KiBxdWl6emluZzoqOiogcmVwb3J0aW5nOio6KiByb2xlOio6KiB1c2VyczoqOioiLCJqdGkiOiIxNGI2Njk5Mi0xNTlhLTRmMzYtYTYyZi1kOTg5YzE4NDE4ZDIifQ.bKbpi3zugXsxh7QoLaKMYog4wYZEIML0E1xDg3KJI3QTuMet8RSmEWlo_aUN-XFULl_Bs2ZLcqzkWH9okdSLMcI_-WpZyAG53kaBi7tJIxHfRFmmWVQAZWYtXz8A4YqcUf-cs6U4kaqnlpSXb6doZKGXfTI8hMoVCOmzT_-YCZuWxGqALiTTzP6FRxj8xVk2pKnzZ3COAaI_5iMGd4w4ie-YlETmM0u3mPOBO3IJX1LnlYPZubnGNWOLpFG5aFZrFfXGDtQUxOAFgT2c5MU75izpOMWiZ1ADpS4Q97H8s3tduirKQSnuNfHO11uE33PLVfwEcnkGDOr0dcrVzg34Ow'
+        'Authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6IjYzYzc5ZjIzLWZiMTAtNGI4YS1hMjdlLWI4YTc4NGJmNWI5MCJ9.eyJpc3MiOiJodHRwczovL2FwaS5icmlnaHRzcGFjZS5jb20vYXV0aCIsImF1ZCI6Imh0dHBzOi8vYXBpLmJyaWdodHNwYWNlLmNvbS9hdXRoL3Rva2VuIiwiZXhwIjoxNjEzMjkxODkwLCJuYmYiOjE2MTMyODgyOTAsInN1YiI6IjE5NSIsInRlbmFudGlkIjoiNTI3MzEzMTctMzcyYS00ZGI0LWI0OWQtNDk1MDJjZTQzZjJiIiwiYXpwIjoiNWQyNzQ1MGYtMmNlOS00ZGNlLTk1NzAtMGIyMzQ1ODBkZmRkIiwic2NvcGUiOiJjb250ZW50Oio6KiBjb3JlOio6KiBkYXRhaHViOio6KiBkaXNjdXNzaW9uczoqOiogZW5yb2xsbWVudDoqOiogZ3JhZGVzOio6KiBxdWl6emluZzoqOiogcmVwb3J0aW5nOio6KiByb2xlOio6KiB1c2VyczoqOioiLCJqdGkiOiIwZjE0NjNmYy1jNzUxLTRjNmQtYTZmMS0yZmFmNjU1NGFlMjQifQ.RVyr11FfBbSoWHJ9gO4sLffGSyFeGQGI12BaQd5jftc1WSxW8vbGnHeh78HPNO6E-5yA0sz7aU2Z-9BrATDZ8PRec6A-cGKfr0MJJxeQT92XRaapXx84xo3w1yb0CL2x6H7Lgc7Nd6EQ0y9dv-ab_ALe_DBhtybPc5ArWIaWJKTMU6AfSeLBT02rjhjMitdjClQRUoqpcBuARCCnFmWa7m32TahWsu-mU10CsWnKgaw57nitHxNplIkc0d2x_e1JG1VVLWekx8yBFtt270SaxpgWKLoKhSD39xQTeSIl0EqdTOgmpZNXf-gWsNLJGBlGdwZTDCX02XOJnZmePL3FWQ',
+        'Cookie': 'ADRUM=s=1613250634620&r=https%3A%2F%2Fdevcop.brightspace.com%2Fd2l%2FsystemCheck%2Fwidget%3F0; d2lSessionVal=TKH40vprvvlOxHs5ZGSliFnXb; d2lSecureSessionVal=Y2iwueXFvbe2Ygxmc183PA5zw'
       }
     };
     axios__WEBPACK_IMPORTED_MODULE_0___default()(config).then(function (response) {
@@ -15344,6 +14653,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
+/* harmony import */ var _api_Request_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../api/Request.js */ "./js/api/Request.js");
 //
 //
 //
@@ -15370,6 +14680,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
@@ -15426,57 +14737,6 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./js/communication/index.vue?vue&type=script&lang=js&":
-/*!*****************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./js/communication/index.vue?vue&type=script&lang=js& ***!
-  \*****************************************************************************************************************************************************************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  data: function data() {
-    return {};
-  }
-});
-
-/***/ }),
-
 /***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./js/dropbox/index.vue?vue&type=script&lang=js&":
 /*!***********************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./js/dropbox/index.vue?vue&type=script&lang=js& ***!
@@ -15488,8 +14748,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _api_DropboxRequest__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../api/DropboxRequest */ "./js/api/DropboxRequest.js");
+//
+//
 //
 //
 //
@@ -15545,31 +14806,841 @@ __webpack_require__.r(__webpack_exports__);
       }
     };
   },
+  methods: {
+    retrieve: function retrieve() {
+      var _this = this;
+
+      request = new DropboxRequest({});
+      request.retrieve().then(function (response) {
+        _this.items = response.data;
+      });
+    }
+  },
   created: function created() {
-    var token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6IjYzYzc5ZjIzLWZiMTAtNGI4YS1hMjdlLWI4YTc4NGJmNWI5MCJ9.eyJpc3MiOiJodHRwczovL2FwaS5icmlnaHRzcGFjZS5jb20vYXV0aCIsImF1ZCI6Imh0dHBzOi8vYXBpLmJyaWdodHNwYWNlLmNvbS9hdXRoL3Rva2VuIiwiZXhwIjoxNjEzMjU0MjM1LCJuYmYiOjE2MTMyNTA2MzUsInN1YiI6IjEyNTUiLCJ0ZW5hbnRpZCI6IjUyNzMxMzE3LTM3MmEtNGRiNC1iNDlkLTQ5NTAyY2U0M2YyYiIsImF6cCI6IjVkMjc0NTBmLTJjZTktNGRjZS05NTcwLTBiMjM0NTgwZGZkZCIsInNjb3BlIjoiY29udGVudDoqOiogY29yZToqOiogZGF0YWh1YjoqOiogZGlzY3Vzc2lvbnM6KjoqIGVucm9sbG1lbnQ6KjoqIGdyYWRlczoqOiogcXVpenppbmc6KjoqIHJlcG9ydGluZzoqOiogcm9sZToqOiogdXNlcnM6KjoqIiwianRpIjoiNGUyOTdkYTEtZDg4Ni00ODI3LTgyN2ItZmE4OGM0MWM5ZjExIn0.k4ndXz5MuMjwu20AXhb6kpOwfVy-iClslOsm7XglIrzO1TKBy1key-iO0MDOhNrAC5A4CpZyWUk3VtOLL8DAM-RGRSXYxEBXpJ8Hnbb2kgUVtBU9ZB7kagfulIRihH5lgEIX08smsokviWowZVT2pUNWxBFpIoJjCdIoXTJ5NAis0pVTPa0EzjELnNFuSuGk91X8Jpv5Gh7sFzDerm9rgjHCzi6it3hW--7Mxh4Rpge8dbEinbC3ugbj4YeCorkScTH65prXGyzbovX1cuNAqTyst0sRxNC7PG0F__d-OW7Q--SYckrYSdMkkg8Q19g2UpQI9pbzk23tGifeFGlHlQ"; // const instance = axios.create({
-    // 			baseURL: 'https://devcop.brightspace.com',
-    //  		headers: {'Authorization': 'basic '+ token}
-    // });
-    // instance.get('/d2l/api/le/1.41/7855/dropbox/folders/')
-    // .then(response => {
-    // 	console.log(response.data);
-    //    	return response.data;
-    // })
-    // 
-
-    var oauth = __webpack_require__(/*! axios-oauth-client */ "./node_modules/axios-oauth-client/dist/index.js");
-
-    var getAuthorizationCode = oauth.client(axios__WEBPACK_IMPORTED_MODULE_0___default().create(), {
-      url: 'https://oauth.com/2.0/token',
-      grant_type: 'authorization_code',
-      client_id: 'foo',
-      client_secret: 'bar',
-      redirect_uri: '...',
-      code: '...',
-      scope: 'baz'
-    });
+    this.retrieve();
   }
 });
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./js/quizzes/index.vue?vue&type=script&lang=js&":
+/*!***********************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./js/quizzes/index.vue?vue&type=script&lang=js& ***!
+  \***********************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  data: function data() {
+    return {
+      items: {
+        'CPSC 329': [{
+          title: 'Quiz 1',
+          submitted_on: '2/11/2021',
+          due_on: 'Tomorrow',
+          link: 'https://devcop.brightspace.com'
+        }],
+        'STAT 213': [{
+          title: 'Lab Quiz 2',
+          submitted_on: '2/11/2021',
+          due_on: 'Tomorrow',
+          link: 'https://devcop.brightspace.com'
+        }]
+      }
+    };
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/client-oauth2/src/client-oauth2.js":
+/*!*********************************************************!*\
+  !*** ./node_modules/client-oauth2/src/client-oauth2.js ***!
+  \*********************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var Buffer = __webpack_require__(/*! safe-buffer */ "?c224").Buffer
+var Querystring = __webpack_require__(/*! querystring */ "./node_modules/querystring/index.js")
+var defaultRequest = __webpack_require__(/*! ./request */ "./node_modules/client-oauth2/src/request/browser.js")
+
+const DEFAULT_URL_BASE = 'https://example.org/'
+
+var btoa
+if (typeof Buffer === 'function') {
+  btoa = btoaBuffer
+} else {
+  btoa = window.btoa.bind(window)
+}
+
+/**
+ * Export `ClientOAuth2` class.
+ */
+module.exports = ClientOAuth2
+
+/**
+ * Default headers for executing OAuth 2.0 flows.
+ */
+var DEFAULT_HEADERS = {
+  Accept: 'application/json, application/x-www-form-urlencoded',
+  'Content-Type': 'application/x-www-form-urlencoded'
+}
+
+/**
+ * Format error response types to regular strings for displaying to clients.
+ *
+ * Reference: http://tools.ietf.org/html/rfc6749#section-4.1.2.1
+ */
+var ERROR_RESPONSES = {
+  invalid_request: [
+    'The request is missing a required parameter, includes an',
+    'invalid parameter value, includes a parameter more than',
+    'once, or is otherwise malformed.'
+  ].join(' '),
+  invalid_client: [
+    'Client authentication failed (e.g., unknown client, no',
+    'client authentication included, or unsupported',
+    'authentication method).'
+  ].join(' '),
+  invalid_grant: [
+    'The provided authorization grant (e.g., authorization',
+    'code, resource owner credentials) or refresh token is',
+    'invalid, expired, revoked, does not match the redirection',
+    'URI used in the authorization request, or was issued to',
+    'another client.'
+  ].join(' '),
+  unauthorized_client: [
+    'The client is not authorized to request an authorization',
+    'code using this method.'
+  ].join(' '),
+  unsupported_grant_type: [
+    'The authorization grant type is not supported by the',
+    'authorization server.'
+  ].join(' '),
+  access_denied: [
+    'The resource owner or authorization server denied the request.'
+  ].join(' '),
+  unsupported_response_type: [
+    'The authorization server does not support obtaining',
+    'an authorization code using this method.'
+  ].join(' '),
+  invalid_scope: [
+    'The requested scope is invalid, unknown, or malformed.'
+  ].join(' '),
+  server_error: [
+    'The authorization server encountered an unexpected',
+    'condition that prevented it from fulfilling the request.',
+    '(This error code is needed because a 500 Internal Server',
+    'Error HTTP status code cannot be returned to the client',
+    'via an HTTP redirect.)'
+  ].join(' '),
+  temporarily_unavailable: [
+    'The authorization server is currently unable to handle',
+    'the request due to a temporary overloading or maintenance',
+    'of the server.'
+  ].join(' ')
+}
+
+/**
+ * Support base64 in node like how it works in the browser.
+ *
+ * @param  {string} string
+ * @return {string}
+ */
+function btoaBuffer (string) {
+  return Buffer.from(string).toString('base64')
+}
+
+/**
+ * Check if properties exist on an object and throw when they aren't.
+ *
+ * @throws {TypeError} If an expected property is missing.
+ *
+ * @param {Object}    obj
+ * @param {...string} props
+ */
+function expects (obj) {
+  for (var i = 1; i < arguments.length; i++) {
+    var prop = arguments[i]
+
+    if (obj[prop] == null) {
+      throw new TypeError('Expected "' + prop + '" to exist')
+    }
+  }
+}
+
+/**
+ * Pull an authentication error from the response data.
+ *
+ * @param  {Object} data
+ * @return {string}
+ */
+function getAuthError (body) {
+  var message = ERROR_RESPONSES[body.error] ||
+    body.error_description ||
+    body.error
+
+  if (message) {
+    var err = new Error(message)
+    err.body = body
+    err.code = 'EAUTH'
+    return err
+  }
+}
+
+/**
+ * Attempt to parse response body as JSON, fall back to parsing as a query string.
+ *
+ * @param {string} body
+ * @return {Object}
+ */
+function parseResponseBody (body) {
+  try {
+    return JSON.parse(body)
+  } catch (e) {
+    return Querystring.parse(body)
+  }
+}
+
+/**
+ * Sanitize the scopes option to be a string.
+ *
+ * @param  {Array}  scopes
+ * @return {string}
+ */
+function sanitizeScope (scopes) {
+  return Array.isArray(scopes) ? scopes.join(' ') : toString(scopes)
+}
+
+/**
+ * Create a request uri based on an options object and token type.
+ *
+ * @param  {Object} options
+ * @param  {string} tokenType
+ * @return {string}
+ */
+function createUri (options, tokenType) {
+  // Check the required parameters are set.
+  expects(options, 'clientId', 'authorizationUri')
+
+  const qs = {
+    client_id: options.clientId,
+    redirect_uri: options.redirectUri,
+    response_type: tokenType,
+    state: options.state
+  }
+  if (options.scopes !== undefined) {
+    qs.scope = sanitizeScope(options.scopes)
+  }
+
+  const sep = options.authorizationUri.includes('?') ? '&' : '?'
+  return options.authorizationUri + sep + Querystring.stringify(
+    Object.assign(qs, options.query))
+}
+
+/**
+ * Create basic auth header.
+ *
+ * @param  {string} username
+ * @param  {string} password
+ * @return {string}
+ */
+function auth (username, password) {
+  return 'Basic ' + btoa(toString(username) + ':' + toString(password))
+}
+
+/**
+ * Ensure a value is a string.
+ *
+ * @param  {string} str
+ * @return {string}
+ */
+function toString (str) {
+  return str == null ? '' : String(str)
+}
+
+/**
+ * Merge request options from an options object.
+ */
+function requestOptions (requestOptions, options) {
+  return {
+    url: requestOptions.url,
+    method: requestOptions.method,
+    body: Object.assign({}, requestOptions.body, options.body),
+    query: Object.assign({}, requestOptions.query, options.query),
+    headers: Object.assign({}, requestOptions.headers, options.headers)
+  }
+}
+
+/**
+ * Construct an object that can handle the multiple OAuth 2.0 flows.
+ *
+ * @param {Object} options
+ */
+function ClientOAuth2 (options, request) {
+  this.options = options
+  this.request = request || defaultRequest
+
+  this.code = new CodeFlow(this)
+  this.token = new TokenFlow(this)
+  this.owner = new OwnerFlow(this)
+  this.credentials = new CredentialsFlow(this)
+  this.jwt = new JwtBearerFlow(this)
+}
+
+/**
+ * Alias the token constructor.
+ *
+ * @type {Function}
+ */
+ClientOAuth2.Token = ClientOAuth2Token
+
+/**
+ * Create a new token from existing data.
+ *
+ * @param  {string} access
+ * @param  {string} [refresh]
+ * @param  {string} [type]
+ * @param  {Object} [data]
+ * @return {Object}
+ */
+ClientOAuth2.prototype.createToken = function (access, refresh, type, data) {
+  var options = Object.assign(
+    {},
+    data,
+    typeof access === 'string' ? { access_token: access } : access,
+    typeof refresh === 'string' ? { refresh_token: refresh } : refresh,
+    typeof type === 'string' ? { token_type: type } : type
+  )
+
+  return new ClientOAuth2.Token(this, options)
+}
+
+/**
+ * Using the built-in request method, we'll automatically attempt to parse
+ * the response.
+ *
+ * @param  {Object}  options
+ * @return {Promise}
+ */
+ClientOAuth2.prototype._request = function (options) {
+  var url = options.url
+  var body = Querystring.stringify(options.body)
+  var query = Querystring.stringify(options.query)
+
+  if (query) {
+    url += (url.indexOf('?') === -1 ? '?' : '&') + query
+  }
+
+  return this.request(options.method, url, body, options.headers)
+    .then(function (res) {
+      var body = parseResponseBody(res.body)
+      var authErr = getAuthError(body)
+
+      if (authErr) {
+        return Promise.reject(authErr)
+      }
+
+      if (res.status < 200 || res.status >= 399) {
+        var statusErr = new Error('HTTP status ' + res.status)
+        statusErr.status = res.status
+        statusErr.body = res.body
+        statusErr.code = 'ESTATUS'
+        return Promise.reject(statusErr)
+      }
+
+      return body
+    })
+}
+
+/**
+ * General purpose client token generator.
+ *
+ * @param {Object} client
+ * @param {Object} data
+ */
+function ClientOAuth2Token (client, data) {
+  this.client = client
+  this.data = data
+  this.tokenType = data.token_type && data.token_type.toLowerCase()
+  this.accessToken = data.access_token
+  this.refreshToken = data.refresh_token
+
+  this.expiresIn(Number(data.expires_in))
+}
+
+/**
+ * Expire the token after some time.
+ *
+ * @param  {number|Date} duration Seconds from now to expire, or a date to expire on.
+ * @return {Date}
+ */
+ClientOAuth2Token.prototype.expiresIn = function (duration) {
+  if (typeof duration === 'number') {
+    this.expires = new Date()
+    this.expires.setSeconds(this.expires.getSeconds() + duration)
+  } else if (duration instanceof Date) {
+    this.expires = new Date(duration.getTime())
+  } else {
+    throw new TypeError('Unknown duration: ' + duration)
+  }
+
+  return this.expires
+}
+
+/**
+ * Sign a standardised request object with user authentication information.
+ *
+ * @param  {Object} requestObject
+ * @return {Object}
+ */
+ClientOAuth2Token.prototype.sign = function (requestObject) {
+  if (!this.accessToken) {
+    throw new Error('Unable to sign without access token')
+  }
+
+  requestObject.headers = requestObject.headers || {}
+
+  if (this.tokenType === 'bearer') {
+    requestObject.headers.Authorization = 'Bearer ' + this.accessToken
+  } else {
+    var parts = requestObject.url.split('#')
+    var token = 'access_token=' + this.accessToken
+    var url = parts[0].replace(/[?&]access_token=[^&#]/, '')
+    var fragment = parts[1] ? '#' + parts[1] : ''
+
+    // Prepend the correct query string parameter to the url.
+    requestObject.url = url + (url.indexOf('?') > -1 ? '&' : '?') + token + fragment
+
+    // Attempt to avoid storing the url in proxies, since the access token
+    // is exposed in the query parameters.
+    requestObject.headers.Pragma = 'no-store'
+    requestObject.headers['Cache-Control'] = 'no-store'
+  }
+
+  return requestObject
+}
+
+/**
+ * Refresh a user access token with the supplied token.
+ *
+ * @param  {Object}  opts
+ * @return {Promise}
+ */
+ClientOAuth2Token.prototype.refresh = function (opts) {
+  var self = this
+  var options = Object.assign({}, this.client.options, opts)
+
+  if (!this.refreshToken) {
+    return Promise.reject(new Error('No refresh token'))
+  }
+
+  return this.client._request(requestOptions({
+    url: options.accessTokenUri,
+    method: 'POST',
+    headers: Object.assign({}, DEFAULT_HEADERS, {
+      Authorization: auth(options.clientId, options.clientSecret)
+    }),
+    body: {
+      refresh_token: this.refreshToken,
+      grant_type: 'refresh_token'
+    }
+  }, options))
+    .then(function (data) {
+      return self.client.createToken(Object.assign({}, self.data, data))
+    })
+}
+
+/**
+ * Check whether the token has expired.
+ *
+ * @return {boolean}
+ */
+ClientOAuth2Token.prototype.expired = function () {
+  return Date.now() > this.expires.getTime()
+}
+
+/**
+ * Support resource owner password credentials OAuth 2.0 grant.
+ *
+ * Reference: http://tools.ietf.org/html/rfc6749#section-4.3
+ *
+ * @param {ClientOAuth2} client
+ */
+function OwnerFlow (client) {
+  this.client = client
+}
+
+/**
+ * Make a request on behalf of the user credentials to get an access token.
+ *
+ * @param  {string}  username
+ * @param  {string}  password
+ * @param  {Object}  [opts]
+ * @return {Promise}
+ */
+OwnerFlow.prototype.getToken = function (username, password, opts) {
+  var self = this
+  var options = Object.assign({}, this.client.options, opts)
+
+  const body = {
+    username: username,
+    password: password,
+    grant_type: 'password'
+  }
+  if (options.scopes !== undefined) {
+    body.scope = sanitizeScope(options.scopes)
+  }
+
+  return this.client._request(requestOptions({
+    url: options.accessTokenUri,
+    method: 'POST',
+    headers: Object.assign({}, DEFAULT_HEADERS, {
+      Authorization: auth(options.clientId, options.clientSecret)
+    }),
+    body: body
+  }, options))
+    .then(function (data) {
+      return self.client.createToken(data)
+    })
+}
+
+/**
+ * Support implicit OAuth 2.0 grant.
+ *
+ * Reference: http://tools.ietf.org/html/rfc6749#section-4.2
+ *
+ * @param {ClientOAuth2} client
+ */
+function TokenFlow (client) {
+  this.client = client
+}
+
+/**
+ * Get the uri to redirect the user to for implicit authentication.
+ *
+ * @param  {Object} [opts]
+ * @return {string}
+ */
+TokenFlow.prototype.getUri = function (opts) {
+  var options = Object.assign({}, this.client.options, opts)
+
+  return createUri(options, 'token')
+}
+
+/**
+ * Get the user access token from the uri.
+ *
+ * @param  {string|Object} uri
+ * @param  {Object}        [opts]
+ * @return {Promise}
+ */
+TokenFlow.prototype.getToken = function (uri, opts) {
+  var options = Object.assign({}, this.client.options, opts)
+  var url = typeof uri === 'object' ? uri : new URL(uri, DEFAULT_URL_BASE)
+  var expectedUrl = new URL(options.redirectUri, DEFAULT_URL_BASE)
+
+  if (typeof url.pathname === 'string' && url.pathname !== expectedUrl.pathname) {
+    return Promise.reject(
+      new TypeError('Redirected path should match configured path, but got: ' + url.pathname)
+    )
+  }
+
+  // If no query string or fragment exists, we won't be able to parse
+  // any useful information from the uri.
+  if (!url.hash && !url.search) {
+    return Promise.reject(new TypeError('Unable to process uri: ' + uri))
+  }
+
+  // Extract data from both the fragment and query string. The fragment is most
+  // important, but the query string is also used because some OAuth 2.0
+  // implementations (Instagram) have a bug where state is passed via query.
+  var data = Object.assign(
+    {},
+    typeof url.search === 'string' ? Querystring.parse(url.search.substr(1)) : (url.search || {}),
+    typeof url.hash === 'string' ? Querystring.parse(url.hash.substr(1)) : (url.hash || {})
+  )
+
+  var err = getAuthError(data)
+
+  // Check if the query string was populated with a known error.
+  if (err) {
+    return Promise.reject(err)
+  }
+
+  // Check whether the state matches.
+  if (options.state != null && data.state !== options.state) {
+    return Promise.reject(new TypeError('Invalid state: ' + data.state))
+  }
+
+  // Initalize a new token and return.
+  return Promise.resolve(this.client.createToken(data))
+}
+
+/**
+ * Support client credentials OAuth 2.0 grant.
+ *
+ * Reference: http://tools.ietf.org/html/rfc6749#section-4.4
+ *
+ * @param {ClientOAuth2} client
+ */
+function CredentialsFlow (client) {
+  this.client = client
+}
+
+/**
+ * Request an access token using the client credentials.
+ *
+ * @param  {Object}  [opts]
+ * @return {Promise}
+ */
+CredentialsFlow.prototype.getToken = function (opts) {
+  var self = this
+  var options = Object.assign({}, this.client.options, opts)
+
+  expects(options, 'clientId', 'clientSecret', 'accessTokenUri')
+
+  const body = {
+    grant_type: 'client_credentials'
+  }
+
+  if (options.scopes !== undefined) {
+    body.scope = sanitizeScope(options.scopes)
+  }
+
+  return this.client._request(requestOptions({
+    url: options.accessTokenUri,
+    method: 'POST',
+    headers: Object.assign({}, DEFAULT_HEADERS, {
+      Authorization: auth(options.clientId, options.clientSecret)
+    }),
+    body: body
+  }, options))
+    .then(function (data) {
+      return self.client.createToken(data)
+    })
+}
+
+/**
+ * Support authorization code OAuth 2.0 grant.
+ *
+ * Reference: http://tools.ietf.org/html/rfc6749#section-4.1
+ *
+ * @param {ClientOAuth2} client
+ */
+function CodeFlow (client) {
+  this.client = client
+}
+
+/**
+ * Generate the uri for doing the first redirect.
+ *
+ * @param  {Object} [opts]
+ * @return {string}
+ */
+CodeFlow.prototype.getUri = function (opts) {
+  var options = Object.assign({}, this.client.options, opts)
+
+  return createUri(options, 'code')
+}
+
+/**
+ * Get the code token from the redirected uri and make another request for
+ * the user access token.
+ *
+ * @param  {string|Object} uri
+ * @param  {Object}        [opts]
+ * @return {Promise}
+ */
+CodeFlow.prototype.getToken = function (uri, opts) {
+  var self = this
+  var options = Object.assign({}, this.client.options, opts)
+
+  expects(options, 'clientId', 'accessTokenUri')
+
+  var url = typeof uri === 'object' ? uri : new URL(uri, DEFAULT_URL_BASE)
+
+  if (
+    typeof options.redirectUri === 'string' &&
+    typeof url.pathname === 'string' &&
+    url.pathname !== (new URL(options.redirectUri, DEFAULT_URL_BASE)).pathname
+  ) {
+    return Promise.reject(
+      new TypeError('Redirected path should match configured path, but got: ' + url.pathname)
+    )
+  }
+
+  if (!url.search || !url.search.substr(1)) {
+    return Promise.reject(new TypeError('Unable to process uri: ' + uri))
+  }
+
+  var data = typeof url.search === 'string'
+    ? Querystring.parse(url.search.substr(1))
+    : (url.search || {})
+  var err = getAuthError(data)
+
+  if (err) {
+    return Promise.reject(err)
+  }
+
+  if (options.state != null && data.state !== options.state) {
+    return Promise.reject(new TypeError('Invalid state: ' + data.state))
+  }
+
+  // Check whether the response code is set.
+  if (!data.code) {
+    return Promise.reject(new TypeError('Missing code, unable to request token'))
+  }
+
+  var headers = Object.assign({}, DEFAULT_HEADERS)
+  var body = { code: data.code, grant_type: 'authorization_code', redirect_uri: options.redirectUri }
+
+  // `client_id`: REQUIRED, if the client is not authenticating with the
+  // authorization server as described in Section 3.2.1.
+  // Reference: https://tools.ietf.org/html/rfc6749#section-3.2.1
+  if (options.clientSecret) {
+    headers.Authorization = auth(options.clientId, options.clientSecret)
+  } else {
+    body.client_id = options.clientId
+  }
+
+  return this.client._request(requestOptions({
+    url: options.accessTokenUri,
+    method: 'POST',
+    headers: headers,
+    body: body
+  }, options))
+    .then(function (data) {
+      return self.client.createToken(data)
+    })
+}
+
+/**
+ * Support JSON Web Token (JWT) Bearer Token OAuth 2.0 grant.
+ *
+ * Reference: https://tools.ietf.org/html/draft-ietf-oauth-jwt-bearer-12#section-2.1
+ *
+ * @param {ClientOAuth2} client
+ */
+function JwtBearerFlow (client) {
+  this.client = client
+}
+
+/**
+ * Request an access token using a JWT token.
+ *
+ * @param  {string} token     A JWT token.
+ * @param  {Object} [opts]
+ * @return {Promise}
+ */
+JwtBearerFlow.prototype.getToken = function (token, opts) {
+  var self = this
+  var options = Object.assign({}, this.client.options, opts)
+  var headers = Object.assign({}, DEFAULT_HEADERS)
+
+  expects(options, 'accessTokenUri')
+
+  // Authentication of the client is optional, as described in
+  // Section 3.2.1 of OAuth 2.0 [RFC6749]
+  if (options.clientId) {
+    headers.Authorization = auth(options.clientId, options.clientSecret)
+  }
+
+  const body = {
+    grant_type: 'urn:ietf:params:oauth:grant-type:jwt-bearer',
+    assertion: token
+  }
+
+  if (options.scopes !== undefined) {
+    body.scope = sanitizeScope(options.scopes)
+  }
+
+  return this.client._request(requestOptions({
+    url: options.accessTokenUri,
+    method: 'POST',
+    headers: headers,
+    body: body
+  }, options))
+    .then(function (data) {
+      return self.client.createToken(data)
+    })
+}
+
+
+/***/ }),
+
+/***/ "./node_modules/client-oauth2/src/request/browser.js":
+/*!***********************************************************!*\
+  !*** ./node_modules/client-oauth2/src/request/browser.js ***!
+  \***********************************************************/
+/***/ ((module) => {
+
+/**
+ * Make a request using `XMLHttpRequest`.
+ *
+ * @param   {string}  method
+ * @param   {string}  url
+ * @param   {string}  body
+ * @param   {Object}  headers
+ * @returns {Promise}
+ */
+module.exports = function request (method, url, body, headers) {
+  return new Promise(function (resolve, reject) {
+    var xhr = new window.XMLHttpRequest()
+
+    xhr.open(method, url)
+
+    xhr.onload = function () {
+      return resolve({
+        status: xhr.status,
+        body: xhr.responseText
+      })
+    }
+
+    xhr.onerror = xhr.onabort = function () {
+      return reject(new Error(xhr.statusText || 'XHR aborted: ' + url))
+    }
+
+    Object.keys(headers).forEach(function (header) {
+      xhr.setRequestHeader(header, headers[header])
+    })
+
+    xhr.send(body)
+  })
+}
+
 
 /***/ }),
 
@@ -15976,6 +16047,187 @@ process.chdir = function (dir) {
     throw new Error('process.chdir is not supported');
 };
 process.umask = function() { return 0; };
+
+
+/***/ }),
+
+/***/ "./node_modules/querystring/decode.js":
+/*!********************************************!*\
+  !*** ./node_modules/querystring/decode.js ***!
+  \********************************************/
+/***/ ((module) => {
+
+"use strict";
+// Copyright Joyent, Inc. and other Node contributors.
+//
+// Permission is hereby granted, free of charge, to any person obtaining a
+// copy of this software and associated documentation files (the
+// "Software"), to deal in the Software without restriction, including
+// without limitation the rights to use, copy, modify, merge, publish,
+// distribute, sublicense, and/or sell copies of the Software, and to permit
+// persons to whom the Software is furnished to do so, subject to the
+// following conditions:
+//
+// The above copyright notice and this permission notice shall be included
+// in all copies or substantial portions of the Software.
+//
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
+// OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+// MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN
+// NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+// DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
+// OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
+// USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+
+
+// If obj.hasOwnProperty has been overridden, then calling
+// obj.hasOwnProperty(prop) will break.
+// See: https://github.com/joyent/node/issues/1707
+function hasOwnProperty(obj, prop) {
+  return Object.prototype.hasOwnProperty.call(obj, prop);
+}
+
+module.exports = function(qs, sep, eq, options) {
+  sep = sep || '&';
+  eq = eq || '=';
+  var obj = {};
+
+  if (typeof qs !== 'string' || qs.length === 0) {
+    return obj;
+  }
+
+  var regexp = /\+/g;
+  qs = qs.split(sep);
+
+  var maxKeys = 1000;
+  if (options && typeof options.maxKeys === 'number') {
+    maxKeys = options.maxKeys;
+  }
+
+  var len = qs.length;
+  // maxKeys <= 0 means that we should not limit keys count
+  if (maxKeys > 0 && len > maxKeys) {
+    len = maxKeys;
+  }
+
+  for (var i = 0; i < len; ++i) {
+    var x = qs[i].replace(regexp, '%20'),
+        idx = x.indexOf(eq),
+        kstr, vstr, k, v;
+
+    if (idx >= 0) {
+      kstr = x.substr(0, idx);
+      vstr = x.substr(idx + 1);
+    } else {
+      kstr = x;
+      vstr = '';
+    }
+
+    k = decodeURIComponent(kstr);
+    v = decodeURIComponent(vstr);
+
+    if (!hasOwnProperty(obj, k)) {
+      obj[k] = v;
+    } else if (Array.isArray(obj[k])) {
+      obj[k].push(v);
+    } else {
+      obj[k] = [obj[k], v];
+    }
+  }
+
+  return obj;
+};
+
+
+/***/ }),
+
+/***/ "./node_modules/querystring/encode.js":
+/*!********************************************!*\
+  !*** ./node_modules/querystring/encode.js ***!
+  \********************************************/
+/***/ ((module) => {
+
+"use strict";
+// Copyright Joyent, Inc. and other Node contributors.
+//
+// Permission is hereby granted, free of charge, to any person obtaining a
+// copy of this software and associated documentation files (the
+// "Software"), to deal in the Software without restriction, including
+// without limitation the rights to use, copy, modify, merge, publish,
+// distribute, sublicense, and/or sell copies of the Software, and to permit
+// persons to whom the Software is furnished to do so, subject to the
+// following conditions:
+//
+// The above copyright notice and this permission notice shall be included
+// in all copies or substantial portions of the Software.
+//
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
+// OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+// MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN
+// NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+// DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
+// OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
+// USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+
+
+var stringifyPrimitive = function(v) {
+  switch (typeof v) {
+    case 'string':
+      return v;
+
+    case 'boolean':
+      return v ? 'true' : 'false';
+
+    case 'number':
+      return isFinite(v) ? v : '';
+
+    default:
+      return '';
+  }
+};
+
+module.exports = function(obj, sep, eq, name) {
+  sep = sep || '&';
+  eq = eq || '=';
+  if (obj === null) {
+    obj = undefined;
+  }
+
+  if (typeof obj === 'object') {
+    return Object.keys(obj).map(function(k) {
+      var ks = encodeURIComponent(stringifyPrimitive(k)) + eq;
+      if (Array.isArray(obj[k])) {
+        return obj[k].map(function(v) {
+          return ks + encodeURIComponent(stringifyPrimitive(v));
+        }).join(sep);
+      } else {
+        return ks + encodeURIComponent(stringifyPrimitive(obj[k]));
+      }
+    }).join(sep);
+
+  }
+
+  if (!name) return '';
+  return encodeURIComponent(stringifyPrimitive(name)) + eq +
+         encodeURIComponent(stringifyPrimitive(obj));
+};
+
+
+/***/ }),
+
+/***/ "./node_modules/querystring/index.js":
+/*!*******************************************!*\
+  !*** ./node_modules/querystring/index.js ***!
+  \*******************************************/
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+"use strict";
+
+
+exports.decode = exports.parse = __webpack_require__(/*! ./decode */ "./node_modules/querystring/decode.js");
+exports.encode = exports.stringify = __webpack_require__(/*! ./encode */ "./node_modules/querystring/encode.js");
 
 
 /***/ }),
@@ -16771,45 +17023,6 @@ component.options.__file = "js/checklist/index.vue"
 
 /***/ }),
 
-/***/ "./js/communication/index.vue":
-/*!************************************!*\
-  !*** ./js/communication/index.vue ***!
-  \************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
-/* harmony import */ var _index_vue_vue_type_template_id_54e78521___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./index.vue?vue&type=template&id=54e78521& */ "./js/communication/index.vue?vue&type=template&id=54e78521&");
-/* harmony import */ var _index_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./index.vue?vue&type=script&lang=js& */ "./js/communication/index.vue?vue&type=script&lang=js&");
-/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! !../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
-
-
-
-
-
-/* normalize component */
-;
-var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__.default)(
-  _index_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__.default,
-  _index_vue_vue_type_template_id_54e78521___WEBPACK_IMPORTED_MODULE_0__.render,
-  _index_vue_vue_type_template_id_54e78521___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns,
-  false,
-  null,
-  null,
-  null
-  
-)
-
-/* hot reload */
-if (false) { var api; }
-component.options.__file = "js/communication/index.vue"
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (component.exports);
-
-/***/ }),
-
 /***/ "./js/dropbox/index.vue":
 /*!******************************!*\
   !*** ./js/dropbox/index.vue ***!
@@ -16845,6 +17058,45 @@ var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__
 /* hot reload */
 if (false) { var api; }
 component.options.__file = "js/dropbox/index.vue"
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (component.exports);
+
+/***/ }),
+
+/***/ "./js/quizzes/index.vue":
+/*!******************************!*\
+  !*** ./js/quizzes/index.vue ***!
+  \******************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _index_vue_vue_type_template_id_6926c13e___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./index.vue?vue&type=template&id=6926c13e& */ "./js/quizzes/index.vue?vue&type=template&id=6926c13e&");
+/* harmony import */ var _index_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./index.vue?vue&type=script&lang=js& */ "./js/quizzes/index.vue?vue&type=script&lang=js&");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! !../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+;
+var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__.default)(
+  _index_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__.default,
+  _index_vue_vue_type_template_id_6926c13e___WEBPACK_IMPORTED_MODULE_0__.render,
+  _index_vue_vue_type_template_id_6926c13e___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns,
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "js/quizzes/index.vue"
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (component.exports);
 
 /***/ }),
@@ -16897,22 +17149,6 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./js/communication/index.vue?vue&type=script&lang=js&":
-/*!*************************************************************!*\
-  !*** ./js/communication/index.vue?vue&type=script&lang=js& ***!
-  \*************************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
-/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_index_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!../../node_modules/vue-loader/lib/index.js??vue-loader-options!./index.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./js/communication/index.vue?vue&type=script&lang=js&");
- /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_index_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__.default); 
-
-/***/ }),
-
 /***/ "./js/dropbox/index.vue?vue&type=script&lang=js&":
 /*!*******************************************************!*\
   !*** ./js/dropbox/index.vue?vue&type=script&lang=js& ***!
@@ -16925,6 +17161,22 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_index_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!../../node_modules/vue-loader/lib/index.js??vue-loader-options!./index.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./js/dropbox/index.vue?vue&type=script&lang=js&");
+ /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_index_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__.default); 
+
+/***/ }),
+
+/***/ "./js/quizzes/index.vue?vue&type=script&lang=js&":
+/*!*******************************************************!*\
+  !*** ./js/quizzes/index.vue?vue&type=script&lang=js& ***!
+  \*******************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_index_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!../../node_modules/vue-loader/lib/index.js??vue-loader-options!./index.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./js/quizzes/index.vue?vue&type=script&lang=js&");
  /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_index_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__.default); 
 
 /***/ }),
@@ -16980,23 +17232,6 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./js/communication/index.vue?vue&type=template&id=54e78521&":
-/*!*******************************************************************!*\
-  !*** ./js/communication/index.vue?vue&type=template&id=54e78521& ***!
-  \*******************************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "render": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_index_vue_vue_type_template_id_54e78521___WEBPACK_IMPORTED_MODULE_0__.render),
-/* harmony export */   "staticRenderFns": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_index_vue_vue_type_template_id_54e78521___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
-/* harmony export */ });
-/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_index_vue_vue_type_template_id_54e78521___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../node_modules/vue-loader/lib/index.js??vue-loader-options!./index.vue?vue&type=template&id=54e78521& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./js/communication/index.vue?vue&type=template&id=54e78521&");
-
-
-/***/ }),
-
 /***/ "./js/dropbox/index.vue?vue&type=template&id=652a5372&":
 /*!*************************************************************!*\
   !*** ./js/dropbox/index.vue?vue&type=template&id=652a5372& ***!
@@ -17010,6 +17245,23 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "staticRenderFns": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_index_vue_vue_type_template_id_652a5372___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
 /* harmony export */ });
 /* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_index_vue_vue_type_template_id_652a5372___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../node_modules/vue-loader/lib/index.js??vue-loader-options!./index.vue?vue&type=template&id=652a5372& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./js/dropbox/index.vue?vue&type=template&id=652a5372&");
+
+
+/***/ }),
+
+/***/ "./js/quizzes/index.vue?vue&type=template&id=6926c13e&":
+/*!*************************************************************!*\
+  !*** ./js/quizzes/index.vue?vue&type=template&id=6926c13e& ***!
+  \*************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_index_vue_vue_type_template_id_6926c13e___WEBPACK_IMPORTED_MODULE_0__.render),
+/* harmony export */   "staticRenderFns": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_index_vue_vue_type_template_id_6926c13e___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
+/* harmony export */ });
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_index_vue_vue_type_template_id_6926c13e___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../node_modules/vue-loader/lib/index.js??vue-loader-options!./index.vue?vue&type=template&id=6926c13e& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./js/quizzes/index.vue?vue&type=template&id=6926c13e&");
 
 
 /***/ }),
@@ -17398,7 +17650,18 @@ var render = function() {
                   ref: "item_title",
                   staticClass: "w-full py-2 px-2 text-xl border-b-2",
                   attrs: { type: "text", name: "title", placeholder: "" },
-                  on: { blur: _vm.cancel }
+                  on: {
+                    blur: _vm.cancel,
+                    keyup: function($event) {
+                      if (
+                        !$event.type.indexOf("key") &&
+                        $event.keyCode !== 13
+                      ) {
+                        return null
+                      }
+                      return _vm.submit($event)
+                    }
+                  }
                 })
               ])
             ]
@@ -17416,10 +17679,10 @@ render._withStripped = true
 
 /***/ }),
 
-/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./js/communication/index.vue?vue&type=template&id=54e78521&":
-/*!**********************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./js/communication/index.vue?vue&type=template&id=54e78521& ***!
-  \**********************************************************************************************************************************************************************************************************/
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./js/dropbox/index.vue?vue&type=template&id=652a5372&":
+/*!****************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./js/dropbox/index.vue?vue&type=template&id=652a5372& ***!
+  \****************************************************************************************************************************************************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -17468,7 +17731,19 @@ var render = function() {
                   _c("td", { staticClass: "align-top" }, [
                     item.submitted_on
                       ? _c("span", [
-                          _vm._v("Submitted: " + _vm._s(item.submitted_on))
+                          _vm._v(
+                            _vm._s(item.num_of_submissions) + " submissions"
+                          )
+                        ])
+                      : _vm._e(),
+                    _vm._v(" "),
+                    _c("br"),
+                    _vm._v(" "),
+                    item.submitted_on
+                      ? _c("span", [
+                          _vm._v(
+                            "Last Submitted: " + _vm._s(item.latest_submission)
+                          )
                         ])
                       : _vm._e()
                   ]),
@@ -17513,7 +17788,7 @@ var staticRenderFns = [
       {
         staticClass: "flex justify-between py-4 mb-4 border-b-2 border-blue-500"
       },
-      [_c("h1", { staticClass: "text-5xl font-bold" }, [_vm._v("Quizzes")])]
+      [_c("h1", { staticClass: "text-5xl font-bold" }, [_vm._v("Dropboxes")])]
     )
   }
 ]
@@ -17523,9 +17798,9 @@ render._withStripped = true
 
 /***/ }),
 
-/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./js/dropbox/index.vue?vue&type=template&id=652a5372&":
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./js/quizzes/index.vue?vue&type=template&id=6926c13e&":
 /*!****************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./js/dropbox/index.vue?vue&type=template&id=652a5372& ***!
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./js/quizzes/index.vue?vue&type=template&id=6926c13e& ***!
   \****************************************************************************************************************************************************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
@@ -17620,7 +17895,7 @@ var staticRenderFns = [
       {
         staticClass: "flex justify-between py-4 mb-4 border-b-2 border-blue-500"
       },
-      [_c("h1", { staticClass: "text-5xl font-bold" }, [_vm._v("Dropboxes")])]
+      [_c("h1", { staticClass: "text-5xl font-bold" }, [_vm._v("Quizzes")])]
     )
   }
 ]
@@ -65791,6 +66066,16 @@ Vue.compile = compileToFunctions;
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Vue);
 
+
+/***/ }),
+
+/***/ "?c224":
+/*!*****************************!*\
+  !*** safe-buffer (ignored) ***!
+  \*****************************/
+/***/ (() => {
+
+/* (ignored) */
 
 /***/ })
 
