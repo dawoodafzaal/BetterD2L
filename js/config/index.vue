@@ -15,7 +15,7 @@
 				</tr>
 				<tr v-show="showCreateItem">
 					<td colspan="3">
-						<input ref="item_title" @blur="cancel" @keyup.13="submit" class="w-full py-2 px-2 text-xl border-b-2" type="text" name="title" placeholder="Enter shell id">
+						<input ref="item_title" v-model="new_item.id" @blur="cancel" @keyup.13="submit" class="w-full py-2 px-2 text-xl border-b-2" type="text" name="title" placeholder="Enter shell id">
 					</td>
 				</tr>
 			</table>
@@ -31,9 +31,15 @@ export default {
 		return {
 			showCreateItem: false,
 			new_item: {
-				title: '',
-				due_on: ''
+				id: ''
 			},
+			new_items: [
+				'Computer Machinery',
+				'Statistics',
+				'Software Engineering',
+				'Information Ethics',
+			],
+			new_index: 0,
 			items: [
 				{
 					id: 7855,
@@ -56,7 +62,15 @@ export default {
 			
 		},
 		submit() {
+			this.items.push({
+				id: this.new_item.id,
+				title: this.new_items[this.new_index++]
+			});
 
+			this.new_item.id = '';
+
+			this.$refs.item_title.blur();
+			this.showCreateItem = false;
 		},
 		cancel() {
 			this.$refs.item_title.blur();
