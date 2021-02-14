@@ -7,7 +7,6 @@ def question_one():
   #checking for a valid input
   if ans_1 != "A" or ans_1 != "B" or ans_1 != "C":
     print("Sorry, that is an invalid answer, please try again.")
-    question_one()
   #if answer
   elif ans_1 == "A":
     print("That's awesome! Keep yourself occupied with tasks/hobbies which ensue joy")

@@ -1,9 +1,7 @@
 from flask import Flask
 from flask import jsonify
 from flask_cors import CORS, cross_origin
-from chatterbot import ChatBot
-from chatterbot.trainers import ChatterBotCorpusTrainer
-import requests
+import random
 
 app = Flask(__name__)
 STUDENT_ID = 195
@@ -15,21 +13,17 @@ headers = {
 cors = CORS(app)
 app.config['CORS_HEADERS'] = 'Content-Type'
 
-#initalize bot
-health_bot = ChatBot("Chatterbot", storage_adapter="chatterbot.storage.SQLStroageAdapter")
-
-#
-trainer = ChatterBotCorpusTrainer(health_bot)
-
-#
-trainer.train("chatterbot.corpus.english")
-
+questions = ["How are you doing?", "How much time have you spent today exercising?", "When was the last time you drank water?", "Am I tired?"]
 
 @app.route('/mentalHealth')
 @cross_origin()
 def mentalHealth():
-    userText = request.args.get('msg')
-    return str(health_bot.get_response(userText))
+  randomnum = random.randint(0,4)
+  question = questions[randomnum]
+
+  return jsonify({"question": question})
+
+
 
 
 if __name__ == '__main__':
