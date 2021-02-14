@@ -17016,16 +17016,16 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
       showCreateItem: false,
       new_item: {
-        title: '',
-        due_on: ''
+        id: ''
       },
+      new_items: ['Computer Machinery', 'Statistics', 'Software Engineering', 'Information Ethics'],
+      new_index: 0,
       items: [{
         id: 7855,
         title: 'Computer Basics'
@@ -17044,13 +17044,23 @@ __webpack_require__.r(__webpack_exports__);
         _this.$refs.item_title.focus();
       });
     },
-    submit: function submit() {},
+    submit: function submit() {
+      this.items.push({
+        id: this.new_item.id,
+        title: this.new_items[this.new_index++]
+      });
+      this.new_item.id = '';
+      this.$refs.item_title.blur();
+      this.showCreateItem = false;
+    },
     cancel: function cancel() {
       this.$refs.item_title.blur();
       this.showCreateItem = false;
     },
     checkItem: function checkItem() {},
-    deleteItem: function deleteItem() {}
+    deleteItem: function deleteItem(index) {
+      array.splice(index, 1);
+    }
   }
 });
 
@@ -20360,26 +20370,9 @@ var render = function() {
         "table",
         { staticClass: "w-full" },
         [
-          _vm._l(_vm.items, function(item) {
+          _vm._l(_vm.items, function(item, new_index) {
             return _c("tr", [
-              _c(
-                "td",
-                { staticClass: "w-2" },
-                [
-                  _c("md-checkbox", {
-                    model: {
-                      value: item.checked_at,
-                      callback: function($$v) {
-                        _vm.$set(item, "checked_at", $$v)
-                      },
-                      expression: "item.checked_at"
-                    }
-                  })
-                ],
-                1
-              ),
-              _vm._v(" "),
-              _c("td", { staticClass: "text-xl" }, [
+              _c("td", { staticClass: "text-xl py-4" }, [
                 _c(
                   "a",
                   {
@@ -20416,6 +20409,14 @@ var render = function() {
             [
               _c("td", { attrs: { colspan: "3" } }, [
                 _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.new_item.id,
+                      expression: "new_item.id"
+                    }
+                  ],
                   ref: "item_title",
                   staticClass: "w-full py-2 px-2 text-xl border-b-2",
                   attrs: {
@@ -20423,6 +20424,7 @@ var render = function() {
                     name: "title",
                     placeholder: "Enter shell id"
                   },
+                  domProps: { value: _vm.new_item.id },
                   on: {
                     blur: _vm.cancel,
                     keyup: function($event) {
@@ -20433,6 +20435,12 @@ var render = function() {
                         return null
                       }
                       return _vm.submit($event)
+                    },
+                    input: function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.$set(_vm.new_item, "id", $event.target.value)
                     }
                   }
                 })
@@ -20497,7 +20505,14 @@ var render = function() {
                           "a",
                           {
                             staticClass: "text-xl",
-                            attrs: { target: "_blank" }
+                            attrs: {
+                              href:
+                                "https://devcop.brightspace.com/d2l/lms/dropbox/user/folder_submit_files.d2l?db=" +
+                                item.id +
+                                "&grpid=0&isprv=0&bp=0&ou=" +
+                                item.org_id,
+                              target: "_blank"
+                            }
                           },
                           [_vm._v(_vm._s(item.title))]
                         )

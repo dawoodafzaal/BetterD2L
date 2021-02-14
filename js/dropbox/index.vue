@@ -9,7 +9,7 @@
 				<table class="w-full">
 					<tr v-for="item in course">
 						<td class="align-top w-1/2 py-4">
-							<a class="text-xl" target="_blank">{{ item.title }}</a>
+							<a :href="`https://devcop.brightspace.com/d2l/lms/dropbox/user/folder_submit_files.d2l?db=${item.id}&grpid=0&isprv=0&bp=0&ou=${item.org_id}`" class="text-xl" target="_blank">{{ item.title }}</a>
 						</td>
 						<td class="align-top py-4">
 							<span v-if="item.latest_submission">{{item.num_of_submissions}} submissions</span>

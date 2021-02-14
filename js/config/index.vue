@@ -6,16 +6,15 @@
 				<button class="text-3xl font-bold hover:text-blue-500 focus:outline-none" @click="createItem">+ Add a shell</button>
 			</header>
 			<table class="w-full">
-				<tr v-for="item in items">
-					<td class="w-2"><md-checkbox v-model="item.checked_at"></md-checkbox></td>
-					<td class="text-xl">
+				<tr v-for="(item, new_index) in items">
+					<td class="text-xl py-4">
 						<a :href="`https://devcop.brightspace.com/d2l/le/content/${item.id}/Home`" target="_blank">{{ item.title }}</a>
 					</td>
 					<td class="uppercase text-right">Shell id: {{ item.id }}</td>
 				</tr>
 				<tr v-show="showCreateItem">
 					<td colspan="3">
-						<input ref="item_title" @blur="cancel" @keyup.13="submit" class="w-full py-2 px-2 text-xl border-b-2" type="text" name="title" placeholder="Enter shell id">
+						<input ref="item_title" v-model="new_item.id" @blur="cancel" @keyup.13="submit" class="w-full py-2 px-2 text-xl border-b-2" type="text" name="title" placeholder="Enter shell id">
 					</td>
 				</tr>
 			</table>
@@ -31,9 +30,15 @@ export default {
 		return {
 			showCreateItem: false,
 			new_item: {
-				title: '',
-				due_on: ''
+				id: ''
 			},
+			new_items: [
+				'Computer Machinery',
+				'Statistics',
+				'Software Engineering',
+				'Information Ethics',
+			],
+			new_index: 0,
 			items: [
 				{
 					id: 7855,
@@ -56,7 +61,15 @@ export default {
 			
 		},
 		submit() {
+			this.items.push({
+				id: this.new_item.id,
+				title: this.new_items[this.new_index++]
+			});
 
+			this.new_item.id = '';
+
+			this.$refs.item_title.blur();
+			this.showCreateItem = false;
 		},
 		cancel() {
 			this.$refs.item_title.blur();
@@ -65,8 +78,8 @@ export default {
 		checkItem() {
 
 		},
-		deleteItem() {
-
+		deleteItem(index) {
+			array.splice(index, 1);
 		}
 	}
 }
