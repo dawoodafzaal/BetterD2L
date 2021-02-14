@@ -14479,7 +14479,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _calendar__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./calendar */ "./js/calendar/index.vue");
 /* harmony import */ var _checklist__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./checklist */ "./js/checklist/index.vue");
 /* harmony import */ var _quizzes__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./quizzes */ "./js/quizzes/index.vue");
-/* harmony import */ var _dropbox__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./dropbox */ "./js/dropbox/index.vue");
+/* harmony import */ var _config__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./config */ "./js/config/index.vue");
+/* harmony import */ var _dropbox__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./dropbox */ "./js/dropbox/index.vue");
+
 
 
 
@@ -14494,8 +14496,11 @@ var routes = [{
   path: '/communication',
   component: _quizzes__WEBPACK_IMPORTED_MODULE_2__.default
 }, {
+  path: '/config',
+  component: _config__WEBPACK_IMPORTED_MODULE_3__.default
+}, {
   path: '/dropbox',
-  component: _dropbox__WEBPACK_IMPORTED_MODULE_3__.default
+  component: _dropbox__WEBPACK_IMPORTED_MODULE_4__.default
 }];
 
 
@@ -14516,6 +14521,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var client_oauth2__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! client-oauth2 */ "./node_modules/client-oauth2/src/client-oauth2.js");
 /* harmony import */ var client_oauth2__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(client_oauth2__WEBPACK_IMPORTED_MODULE_1__);
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -14730,6 +14743,82 @@ __webpack_require__.r(__webpack_exports__);
         title: 'Clean desk',
         checked_at: false,
         due_on: 'Last Week'
+      }]
+    };
+  },
+  methods: {
+    createItem: function createItem() {
+      var _this = this;
+
+      this.showCreateItem = true;
+      this.$nextTick(function () {
+        _this.$refs.item_title.focus();
+      });
+    },
+    submit: function submit() {},
+    cancel: function cancel() {
+      this.$refs.item_title.blur();
+      this.showCreateItem = false;
+    },
+    checkItem: function checkItem() {},
+    deleteItem: function deleteItem() {}
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./js/config/index.vue?vue&type=script&lang=js&":
+/*!**********************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./js/config/index.vue?vue&type=script&lang=js& ***!
+  \**********************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _api_Request_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../api/Request.js */ "./js/api/Request.js");
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  data: function data() {
+    return {
+      showCreateItem: false,
+      new_item: {
+        title: '',
+        due_on: ''
+      },
+      items: [{
+        id: 7855,
+        title: 'Computer Basics'
+      }, {
+        id: 7032,
+        title: 'Physics'
       }]
     };
   },
@@ -17047,6 +17136,45 @@ component.options.__file = "js/checklist/index.vue"
 
 /***/ }),
 
+/***/ "./js/config/index.vue":
+/*!*****************************!*\
+  !*** ./js/config/index.vue ***!
+  \*****************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _index_vue_vue_type_template_id_20ff242d___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./index.vue?vue&type=template&id=20ff242d& */ "./js/config/index.vue?vue&type=template&id=20ff242d&");
+/* harmony import */ var _index_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./index.vue?vue&type=script&lang=js& */ "./js/config/index.vue?vue&type=script&lang=js&");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! !../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+;
+var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__.default)(
+  _index_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__.default,
+  _index_vue_vue_type_template_id_20ff242d___WEBPACK_IMPORTED_MODULE_0__.render,
+  _index_vue_vue_type_template_id_20ff242d___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns,
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "js/config/index.vue"
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (component.exports);
+
+/***/ }),
+
 /***/ "./js/dropbox/index.vue":
 /*!******************************!*\
   !*** ./js/dropbox/index.vue ***!
@@ -17173,6 +17301,22 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./js/config/index.vue?vue&type=script&lang=js&":
+/*!******************************************************!*\
+  !*** ./js/config/index.vue?vue&type=script&lang=js& ***!
+  \******************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_index_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!../../node_modules/vue-loader/lib/index.js??vue-loader-options!./index.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./js/config/index.vue?vue&type=script&lang=js&");
+ /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_index_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__.default); 
+
+/***/ }),
+
 /***/ "./js/dropbox/index.vue?vue&type=script&lang=js&":
 /*!*******************************************************!*\
   !*** ./js/dropbox/index.vue?vue&type=script&lang=js& ***!
@@ -17252,6 +17396,23 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "staticRenderFns": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_index_vue_vue_type_template_id_a7bc4a1e___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
 /* harmony export */ });
 /* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_index_vue_vue_type_template_id_a7bc4a1e___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../node_modules/vue-loader/lib/index.js??vue-loader-options!./index.vue?vue&type=template&id=a7bc4a1e& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./js/checklist/index.vue?vue&type=template&id=a7bc4a1e&");
+
+
+/***/ }),
+
+/***/ "./js/config/index.vue?vue&type=template&id=20ff242d&":
+/*!************************************************************!*\
+  !*** ./js/config/index.vue?vue&type=template&id=20ff242d& ***!
+  \************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_index_vue_vue_type_template_id_20ff242d___WEBPACK_IMPORTED_MODULE_0__.render),
+/* harmony export */   "staticRenderFns": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_index_vue_vue_type_template_id_20ff242d___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
+/* harmony export */ });
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_index_vue_vue_type_template_id_20ff242d___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../node_modules/vue-loader/lib/index.js??vue-loader-options!./index.vue?vue&type=template&id=20ff242d& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./js/config/index.vue?vue&type=template&id=20ff242d&");
 
 
 /***/ }),
@@ -17381,6 +17542,7 @@ var render = function() {
           _c(
             "md-app-drawer",
             {
+              staticClass: "bg-blue-600",
               attrs: { "md-active": _vm.showSidebar, "md-persistent": "full" },
               on: {
                 "update:mdActive": function($event) {
@@ -17392,191 +17554,241 @@ var render = function() {
               }
             },
             [
-              _c(
-                "nav",
-                { staticClass: "h-screen bg-blue-600 shadow-lg z-50 w-full" },
-                [
-                  _c("section", { staticClass: "px-4 py-6" }, [
-                    _c("div", { staticClass: "grid grid-cols-2 gap-4" }, [
-                      _c(
-                        "div",
-                        {
-                          staticClass:
-                            "py-16 bg-blue-500 rounded-lg text-white text-center"
-                        },
-                        [
-                          _c(
-                            "router-link",
-                            {
-                              staticClass: "text-lg font-bold text-white",
-                              staticStyle: { color: "white" },
-                              attrs: { to: "/calendar" }
-                            },
-                            [
-                              _c(
-                                "svg",
-                                {
-                                  staticClass: "w-6 h-6 align-top inline-block",
+              _c("nav", { staticClass: "h-full bg-blue-600 z-50 w-full" }, [
+                _c("section", { staticClass: "px-4 py-6" }, [
+                  _c("div", { staticClass: "grid grid-cols-2 gap-4" }, [
+                    _c(
+                      "div",
+                      {
+                        staticClass:
+                          "py-16 bg-blue-500 rounded-lg text-white text-center"
+                      },
+                      [
+                        _c(
+                          "router-link",
+                          {
+                            staticClass: "text-lg font-bold text-white",
+                            staticStyle: { color: "white" },
+                            attrs: { to: "/calendar" }
+                          },
+                          [
+                            _c(
+                              "svg",
+                              {
+                                staticClass: "w-6 h-6 align-top inline-block",
+                                attrs: {
+                                  xmlns: "http://www.w3.org/2000/svg",
+                                  fill: "none",
+                                  viewBox: "0 0 24 24",
+                                  stroke: "currentColor"
+                                }
+                              },
+                              [
+                                _c("path", {
                                   attrs: {
-                                    xmlns: "http://www.w3.org/2000/svg",
-                                    fill: "none",
-                                    viewBox: "0 0 24 24",
-                                    stroke: "currentColor"
+                                    "stroke-linecap": "round",
+                                    "stroke-linejoin": "round",
+                                    "stroke-width": "2",
+                                    d:
+                                      "M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
                                   }
-                                },
-                                [
-                                  _c("path", {
-                                    attrs: {
-                                      "stroke-linecap": "round",
-                                      "stroke-linejoin": "round",
-                                      "stroke-width": "2",
-                                      d:
-                                        "M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
-                                    }
-                                  })
-                                ]
-                              ),
-                              _vm._v("\n\t\t\t\t\t\t\tCalendar")
-                            ]
-                          )
-                        ],
-                        1
-                      ),
-                      _vm._v(" "),
-                      _c(
-                        "div",
-                        {
-                          staticClass:
-                            "py-16 bg-blue-500 rounded-lg text-white text-center"
-                        },
-                        [
-                          _c(
-                            "router-link",
-                            {
-                              staticClass: "text-lg font-bold text-white",
-                              staticStyle: { color: "white" },
-                              attrs: { to: "/checklist" }
-                            },
-                            [
-                              _c(
-                                "svg",
-                                {
-                                  staticClass: "w-6 h-6 align-top inline-block",
+                                })
+                              ]
+                            ),
+                            _vm._v("\n\t\t\t\t\t\t\tCalendar")
+                          ]
+                        )
+                      ],
+                      1
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "div",
+                      {
+                        staticClass:
+                          "py-16 bg-blue-500 rounded-lg text-white text-center"
+                      },
+                      [
+                        _c(
+                          "router-link",
+                          {
+                            staticClass: "text-lg font-bold text-white",
+                            staticStyle: { color: "white" },
+                            attrs: { to: "/checklist" }
+                          },
+                          [
+                            _c(
+                              "svg",
+                              {
+                                staticClass: "w-6 h-6 align-top inline-block",
+                                attrs: {
+                                  xmlns: "http://www.w3.org/2000/svg",
+                                  fill: "none",
+                                  viewBox: "0 0 24 24",
+                                  stroke: "currentColor"
+                                }
+                              },
+                              [
+                                _c("path", {
                                   attrs: {
-                                    xmlns: "http://www.w3.org/2000/svg",
-                                    fill: "none",
-                                    viewBox: "0 0 24 24",
-                                    stroke: "currentColor"
+                                    "stroke-linecap": "round",
+                                    "stroke-linejoin": "round",
+                                    "stroke-width": "2",
+                                    d:
+                                      "M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"
                                   }
-                                },
-                                [
-                                  _c("path", {
-                                    attrs: {
-                                      "stroke-linecap": "round",
-                                      "stroke-linejoin": "round",
-                                      "stroke-width": "2",
-                                      d:
-                                        "M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"
-                                    }
-                                  })
-                                ]
-                              ),
-                              _vm._v("\n\t\t\t\t\t\t\tChecklist")
-                            ]
-                          )
-                        ],
-                        1
-                      ),
-                      _vm._v(" "),
-                      _c(
-                        "div",
-                        {
-                          staticClass:
-                            "py-16 bg-blue-500 rounded-lg text-white text-center"
-                        },
-                        [
-                          _c(
-                            "router-link",
-                            {
-                              staticClass: "text-lg font-bold text-white",
-                              staticStyle: { color: "white" },
-                              attrs: { to: "/communication" }
-                            },
-                            [
-                              _c(
-                                "svg",
-                                {
-                                  staticClass: "w-6 h-6 align-top inline-block",
+                                })
+                              ]
+                            ),
+                            _vm._v("\n\t\t\t\t\t\t\tChecklist")
+                          ]
+                        )
+                      ],
+                      1
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "div",
+                      {
+                        staticClass:
+                          "py-16 bg-blue-500 rounded-lg text-white text-center"
+                      },
+                      [
+                        _c(
+                          "router-link",
+                          {
+                            staticClass: "text-lg font-bold text-white",
+                            staticStyle: { color: "white" },
+                            attrs: { to: "/communication" }
+                          },
+                          [
+                            _c(
+                              "svg",
+                              {
+                                staticClass: "w-6 h-6 align-top inline-block",
+                                attrs: {
+                                  xmlns: "http://www.w3.org/2000/svg",
+                                  viewBox: "0 0 20 20",
+                                  fill: "currentColor"
+                                }
+                              },
+                              [
+                                _c("path", {
                                   attrs: {
-                                    xmlns: "http://www.w3.org/2000/svg",
-                                    viewBox: "0 0 20 20",
-                                    fill: "currentColor"
+                                    d:
+                                      "M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z"
                                   }
-                                },
-                                [
-                                  _c("path", {
-                                    attrs: {
-                                      d:
-                                        "M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z"
-                                    }
-                                  })
-                                ]
-                              ),
-                              _vm._v("\n\t\t\t\t\t\t\tQuizzes")
-                            ]
-                          )
-                        ],
-                        1
-                      ),
-                      _vm._v(" "),
-                      _c(
-                        "div",
-                        {
-                          staticClass:
-                            "py-16 bg-blue-500 rounded-lg text-white text-center"
-                        },
-                        [
-                          _c(
-                            "router-link",
-                            {
-                              staticClass: "text-lg font-bold text-white",
-                              staticStyle: { color: "white" },
-                              attrs: { to: "/dropbox" }
-                            },
-                            [
-                              _c(
-                                "svg",
-                                {
-                                  staticClass: "w-6 h-6 align-top inline-block",
+                                })
+                              ]
+                            ),
+                            _vm._v("\n\t\t\t\t\t\t\tQuizzes")
+                          ]
+                        )
+                      ],
+                      1
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "div",
+                      {
+                        staticClass:
+                          "py-16 bg-blue-500 rounded-lg text-white text-center"
+                      },
+                      [
+                        _c(
+                          "router-link",
+                          {
+                            staticClass: "text-lg font-bold text-white",
+                            staticStyle: { color: "white" },
+                            attrs: { to: "/dropbox" }
+                          },
+                          [
+                            _c(
+                              "svg",
+                              {
+                                staticClass: "w-6 h-6 align-top inline-block",
+                                attrs: {
+                                  xmlns: "http://www.w3.org/2000/svg",
+                                  fill: "none",
+                                  viewBox: "0 0 24 24",
+                                  stroke: "currentColor"
+                                }
+                              },
+                              [
+                                _c("path", {
                                   attrs: {
-                                    xmlns: "http://www.w3.org/2000/svg",
-                                    fill: "none",
-                                    viewBox: "0 0 24 24",
-                                    stroke: "currentColor"
+                                    "stroke-linecap": "round",
+                                    "stroke-linejoin": "round",
+                                    "stroke-width": "2",
+                                    d:
+                                      "M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"
                                   }
-                                },
-                                [
-                                  _c("path", {
-                                    attrs: {
-                                      "stroke-linecap": "round",
-                                      "stroke-linejoin": "round",
-                                      "stroke-width": "2",
-                                      d:
-                                        "M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"
-                                    }
-                                  })
-                                ]
-                              ),
-                              _vm._v("\n\t\t\t\t\t\t\tDropbox")
-                            ]
-                          )
-                        ],
-                        1
-                      )
-                    ])
+                                })
+                              ]
+                            ),
+                            _vm._v("\n\t\t\t\t\t\t\tDropbox")
+                          ]
+                        )
+                      ],
+                      1
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "div",
+                      {
+                        staticClass:
+                          "py-16 bg-blue-500 rounded-lg text-white text-center"
+                      },
+                      [
+                        _c(
+                          "router-link",
+                          {
+                            staticClass: "text-lg font-bold text-white",
+                            staticStyle: { color: "white" },
+                            attrs: { to: "/config" }
+                          },
+                          [
+                            _c(
+                              "svg",
+                              {
+                                staticClass: "w-6 h-6 align-top inline-block",
+                                attrs: {
+                                  xmlns: "http://www.w3.org/2000/svg",
+                                  fill: "none",
+                                  viewBox: "0 0 24 24",
+                                  stroke: "currentColor"
+                                }
+                              },
+                              [
+                                _c("path", {
+                                  attrs: {
+                                    "stroke-linecap": "round",
+                                    "stroke-linejoin": "round",
+                                    "stroke-width": "2",
+                                    d:
+                                      "M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"
+                                  }
+                                }),
+                                _vm._v(" "),
+                                _c("path", {
+                                  attrs: {
+                                    "stroke-linecap": "round",
+                                    "stroke-linejoin": "round",
+                                    "stroke-width": "2",
+                                    d: "M15 12a3 3 0 11-6 0 3 3 0 016 0z"
+                                  }
+                                })
+                              ]
+                            ),
+                            _vm._v("\n\t\t\t\t\t\t\tShell Configuration")
+                          ]
+                        )
+                      ],
+                      1
+                    )
                   ])
-                ]
-              )
+                ])
+              ])
             ]
           ),
           _vm._v(" "),
@@ -17724,6 +17936,139 @@ var render = function() {
               _vm._v(" "),
               _c("td", { staticClass: "uppercase text-right" }, [
                 _vm._v(_vm._s(item.due_on))
+              ])
+            ])
+          }),
+          _vm._v(" "),
+          _c(
+            "tr",
+            {
+              directives: [
+                {
+                  name: "show",
+                  rawName: "v-show",
+                  value: _vm.showCreateItem,
+                  expression: "showCreateItem"
+                }
+              ]
+            },
+            [
+              _c("td", { attrs: { colspan: "3" } }, [
+                _c("input", {
+                  ref: "item_title",
+                  staticClass: "w-full py-2 px-2 text-xl border-b-2",
+                  attrs: { type: "text", name: "title", placeholder: "" },
+                  on: {
+                    blur: _vm.cancel,
+                    keyup: function($event) {
+                      if (
+                        !$event.type.indexOf("key") &&
+                        $event.keyCode !== 13
+                      ) {
+                        return null
+                      }
+                      return _vm.submit($event)
+                    }
+                  }
+                })
+              ])
+            ]
+          )
+        ],
+        2
+      )
+    ])
+  ])
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./js/config/index.vue?vue&type=template&id=20ff242d&":
+/*!***************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./js/config/index.vue?vue&type=template&id=20ff242d& ***!
+  \***************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => (/* binding */ render),
+/* harmony export */   "staticRenderFns": () => (/* binding */ staticRenderFns)
+/* harmony export */ });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("section", { staticClass: "py-6 px-6" }, [
+    _c("div", { staticClass: "rounded-lg bg-white p-6 pb-12 shadow-lg" }, [
+      _c(
+        "header",
+        {
+          staticClass:
+            "flex justify-between py-4 mb-4 border-b-2 border-blue-500"
+        },
+        [
+          _c("h1", { staticClass: "text-5xl font-bold" }, [
+            _vm._v("Shells (" + _vm._s(_vm.items.length) + ")")
+          ]),
+          _vm._v(" "),
+          _c(
+            "button",
+            {
+              staticClass:
+                "text-3xl font-bold hover:text-blue-500 focus:outline-none",
+              on: { click: _vm.createItem }
+            },
+            [_vm._v("+ Add a shell")]
+          )
+        ]
+      ),
+      _vm._v(" "),
+      _c(
+        "table",
+        { staticClass: "w-full" },
+        [
+          _vm._l(_vm.items, function(item) {
+            return _c("tr", [
+              _c(
+                "td",
+                { staticClass: "w-2" },
+                [
+                  _c("md-checkbox", {
+                    model: {
+                      value: item.checked_at,
+                      callback: function($$v) {
+                        _vm.$set(item, "checked_at", $$v)
+                      },
+                      expression: "item.checked_at"
+                    }
+                  })
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c("td", { staticClass: "text-xl" }, [
+                _c(
+                  "a",
+                  {
+                    attrs: {
+                      href:
+                        "https://devcop.brightspace.com/d2l/le/content/" +
+                        item.id +
+                        "/Home",
+                      target: "_blank"
+                    }
+                  },
+                  [_vm._v(_vm._s(item.title))]
+                )
+              ]),
+              _vm._v(" "),
+              _c("td", { staticClass: "uppercase text-right" }, [
+                _vm._v("Shell id: " + _vm._s(item.id))
               ])
             ])
           }),
