@@ -17057,31 +17057,7 @@ __webpack_require__.r(__webpack_exports__);
         duedate: ''
       },
       new_date: '',
-      items: [{
-        id: 1,
-        title: 'Submit Worksheet 5 (CPSC 329 Dropbox)',
-        related: {
-          type: 'dropbox',
-          id: 1
-        },
-        checked_at: false,
-        due_on: 'Tomorrow'
-      }, {
-        id: 2,
-        title: 'Start Computing Machinery Project',
-        checked_at: true,
-        due_on: 'Yesterday'
-      }, {
-        id: 3,
-        title: 'Study for STAT 213',
-        checked_at: true,
-        due_on: 'Tomorrow'
-      }, {
-        id: 4,
-        title: 'Clean desk',
-        checked_at: false,
-        due_on: 'Last Week'
-      }]
+      items: []
     };
   },
   methods: {
@@ -20924,7 +20900,7 @@ var render = function() {
                             click: function($event) {
                               _vm.createChecklistItem(
                                 "Study for " + item.title + " (Quiz)",
-                                item.due_on
+                                item.end_date
                               )
                             }
                           }

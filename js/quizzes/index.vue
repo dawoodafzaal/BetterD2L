@@ -16,7 +16,7 @@
 						</td>
 						<td class="text-right pb-4 py-4">
 							<div v-if="item.num_of_attempts">
-								<button @click="createChecklistItem(`Study for ${item.title} (Quiz)`, item.due_on)" class="uppercase text-sm py-2 px-4 bg-blue-500 text-white rounded font-bold mb-2">Add to checklist</button>
+								<button @click="createChecklistItem(`Study for ${item.title} (Quiz)`, item.end_date)" class="uppercase text-sm py-2 px-4 bg-blue-500 text-white rounded font-bold mb-2">Add to checklist</button>
 							</div>
 							<span>Closed by <strong>{{ item.end_date }}</strong></span>
 						</td>
