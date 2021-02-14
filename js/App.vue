@@ -1,6 +1,6 @@
 <template>
 	<div>
-		<nav class="fixed h-screen w-1/4 bg-blue-600">
+		<nav class="fixed h-screen w-1/4 bg-blue-600 shadow-lg">
 			<section class="px-8 py-4">
 				<div class="grid grid-cols-2 gap-4">
 					<div class="py-16 bg-blue-500 rounded-lg text-white text-center">
@@ -18,7 +18,13 @@
 				</div>
 			</section>
 		</nav>
-		<section class="w-3/4 min-h-screen" style="margin-left: 25%;">
+		<section class="bg-gray-200 w-3/4 min-h-screen" style="margin-left: 25%;">
+			<nav class="flex w-full py-8 px-4 bg-white shadow justify-between">
+				<div>
+					&nbsp;
+				</div>
+				<div class="text-xl font-semibold pr-4 pl-2">Hello, Student</div>
+			</nav>
 			<router-view></router-view>
 		</section>
 	</div>
