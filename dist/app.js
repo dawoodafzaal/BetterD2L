@@ -17386,7 +17386,7 @@ var render = function() {
                 "nav",
                 { staticClass: "h-screen bg-blue-600 shadow-lg z-50 w-full" },
                 [
-                  _c("section", { staticClass: "px-8 py-4" }, [
+                  _c("section", { staticClass: "px-4 py-6" }, [
                     _c("div", { staticClass: "grid grid-cols-2 gap-4" }, [
                       _c(
                         "div",

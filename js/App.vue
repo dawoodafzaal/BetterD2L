@@ -16,7 +16,7 @@
 			</md-app-toolbar>
 			<md-app-drawer :md-active.sync="showSidebar" md-persistent="full">
 				<nav class="h-screen bg-blue-600 shadow-lg z-50 w-full">
-					<section class="px-8 py-4">
+					<section class="px-4 py-6">
 						<div class="grid grid-cols-2 gap-4">
 							<div class="py-16 bg-blue-500 rounded-lg text-white text-center">
 								<router-link style="color: white;" to="/calendar" class="text-lg font-bold text-white">
