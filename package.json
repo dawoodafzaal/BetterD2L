@@ -25,6 +25,7 @@
     "axios-oauth-client": "^1.4.0",
     "axios-token-interceptor": "^0.2.0",
     "client-oauth2": "^4.3.3",
+    "cross-env": "^7.0.3",
     "vue": "^2.6.12",
     "vue-material": "^1.0.0-beta-15",
     "vue-router": "^3.5.1"

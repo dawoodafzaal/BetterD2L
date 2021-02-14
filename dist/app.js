@@ -14561,11 +14561,25 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
+      showSidebar: false,
       firstName: '',
       lastName: ''
     };
@@ -17282,224 +17296,296 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", [
-    _c("nav", { staticClass: "fixed h-screen w-1/4 bg-blue-600 shadow-lg" }, [
-      _c("section", { staticClass: "px-8 py-4" }, [
-        _c("div", { staticClass: "grid grid-cols-2 gap-4" }, [
-          _c(
-            "div",
-            {
-              staticClass: "py-16 bg-blue-500 rounded-lg text-white text-center"
-            },
-            [
-              _c(
-                "router-link",
-                {
-                  staticClass: "text-lg font-bold text-white",
-                  staticStyle: { color: "white" },
-                  attrs: { to: "/calendar" }
-                },
-                [
+  return _c(
+    "div",
+    [
+      _c(
+        "md-app",
+        [
+          _c("md-app-toolbar", { staticClass: "p-0" }, [
+            _c(
+              "nav",
+              {
+                staticClass:
+                  "flex w-full py-8 px-6 bg-white shadow justify-between"
+              },
+              [
+                _c("div", [
                   _c(
-                    "svg",
+                    "button",
                     {
-                      staticClass: "w-6 h-6 align-top inline-block",
-                      attrs: {
-                        xmlns: "http://www.w3.org/2000/svg",
-                        fill: "none",
-                        viewBox: "0 0 24 24",
-                        stroke: "currentColor"
+                      on: {
+                        click: function($event) {
+                          _vm.showSidebar = !_vm.showSidebar
+                        }
                       }
                     },
                     [
-                      _c("path", {
-                        attrs: {
-                          "stroke-linecap": "round",
-                          "stroke-linejoin": "round",
-                          "stroke-width": "2",
-                          d:
-                            "M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
-                        }
-                      })
+                      _c(
+                        "svg",
+                        {
+                          staticClass: "w-8 h-8 align-middle inline-block",
+                          attrs: {
+                            xmlns: "http://www.w3.org/2000/svg",
+                            fill: "none",
+                            viewBox: "0 0 24 24",
+                            stroke: "currentColor"
+                          }
+                        },
+                        [
+                          _c("path", {
+                            attrs: {
+                              "stroke-linecap": "round",
+                              "stroke-linejoin": "round",
+                              "stroke-width": "2",
+                              d: "M4 6h16M4 12h16M4 18h16"
+                            }
+                          })
+                        ]
+                      )
                     ]
                   ),
-                  _vm._v("\n\t\t\t\t\t\tCalendar")
-                ]
-              )
-            ],
-            1
-          ),
+                  _vm._v(" "),
+                  _c(
+                    "h1",
+                    {
+                      staticClass:
+                        "text-3xl align-middle font-bold inline-block"
+                    },
+                    [_vm._v("BetterD2L")]
+                  )
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "text-xl font-semibold pr-4 pl-2" }, [
+                  _vm._v(
+                    "Hello, " +
+                      _vm._s(_vm.firstName) +
+                      " " +
+                      _vm._s(_vm.lastName)
+                  )
+                ])
+              ]
+            )
+          ]),
           _vm._v(" "),
           _c(
-            "div",
+            "md-app-drawer",
             {
-              staticClass: "py-16 bg-blue-500 rounded-lg text-white text-center"
+              attrs: { "md-active": _vm.showSidebar, "md-persistent": "full" },
+              on: {
+                "update:mdActive": function($event) {
+                  _vm.showSidebar = $event
+                },
+                "update:md-active": function($event) {
+                  _vm.showSidebar = $event
+                }
+              }
             },
             [
               _c(
-                "router-link",
-                {
-                  staticClass: "text-lg font-bold text-white",
-                  staticStyle: { color: "white" },
-                  attrs: { to: "/checklist" }
-                },
+                "nav",
+                { staticClass: "h-screen bg-blue-600 shadow-lg z-50 w-full" },
                 [
-                  _c(
-                    "svg",
-                    {
-                      staticClass: "w-6 h-6 align-top inline-block",
-                      attrs: {
-                        xmlns: "http://www.w3.org/2000/svg",
-                        fill: "none",
-                        viewBox: "0 0 24 24",
-                        stroke: "currentColor"
-                      }
-                    },
-                    [
-                      _c("path", {
-                        attrs: {
-                          "stroke-linecap": "round",
-                          "stroke-linejoin": "round",
-                          "stroke-width": "2",
-                          d:
-                            "M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"
-                        }
-                      })
-                    ]
-                  ),
-                  _vm._v("\n\t\t\t\t\t\tChecklist")
+                  _c("section", { staticClass: "px-8 py-4" }, [
+                    _c("div", { staticClass: "grid grid-cols-2 gap-4" }, [
+                      _c(
+                        "div",
+                        {
+                          staticClass:
+                            "py-16 bg-blue-500 rounded-lg text-white text-center"
+                        },
+                        [
+                          _c(
+                            "router-link",
+                            {
+                              staticClass: "text-lg font-bold text-white",
+                              staticStyle: { color: "white" },
+                              attrs: { to: "/calendar" }
+                            },
+                            [
+                              _c(
+                                "svg",
+                                {
+                                  staticClass: "w-6 h-6 align-top inline-block",
+                                  attrs: {
+                                    xmlns: "http://www.w3.org/2000/svg",
+                                    fill: "none",
+                                    viewBox: "0 0 24 24",
+                                    stroke: "currentColor"
+                                  }
+                                },
+                                [
+                                  _c("path", {
+                                    attrs: {
+                                      "stroke-linecap": "round",
+                                      "stroke-linejoin": "round",
+                                      "stroke-width": "2",
+                                      d:
+                                        "M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
+                                    }
+                                  })
+                                ]
+                              ),
+                              _vm._v("\n\t\t\t\t\t\t\tCalendar")
+                            ]
+                          )
+                        ],
+                        1
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "div",
+                        {
+                          staticClass:
+                            "py-16 bg-blue-500 rounded-lg text-white text-center"
+                        },
+                        [
+                          _c(
+                            "router-link",
+                            {
+                              staticClass: "text-lg font-bold text-white",
+                              staticStyle: { color: "white" },
+                              attrs: { to: "/checklist" }
+                            },
+                            [
+                              _c(
+                                "svg",
+                                {
+                                  staticClass: "w-6 h-6 align-top inline-block",
+                                  attrs: {
+                                    xmlns: "http://www.w3.org/2000/svg",
+                                    fill: "none",
+                                    viewBox: "0 0 24 24",
+                                    stroke: "currentColor"
+                                  }
+                                },
+                                [
+                                  _c("path", {
+                                    attrs: {
+                                      "stroke-linecap": "round",
+                                      "stroke-linejoin": "round",
+                                      "stroke-width": "2",
+                                      d:
+                                        "M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"
+                                    }
+                                  })
+                                ]
+                              ),
+                              _vm._v("\n\t\t\t\t\t\t\tChecklist")
+                            ]
+                          )
+                        ],
+                        1
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "div",
+                        {
+                          staticClass:
+                            "py-16 bg-blue-500 rounded-lg text-white text-center"
+                        },
+                        [
+                          _c(
+                            "router-link",
+                            {
+                              staticClass: "text-lg font-bold text-white",
+                              staticStyle: { color: "white" },
+                              attrs: { to: "/communication" }
+                            },
+                            [
+                              _c(
+                                "svg",
+                                {
+                                  staticClass: "w-6 h-6 align-top inline-block",
+                                  attrs: {
+                                    xmlns: "http://www.w3.org/2000/svg",
+                                    viewBox: "0 0 20 20",
+                                    fill: "currentColor"
+                                  }
+                                },
+                                [
+                                  _c("path", {
+                                    attrs: {
+                                      d:
+                                        "M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z"
+                                    }
+                                  })
+                                ]
+                              ),
+                              _vm._v("\n\t\t\t\t\t\t\tQuizzes")
+                            ]
+                          )
+                        ],
+                        1
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "div",
+                        {
+                          staticClass:
+                            "py-16 bg-blue-500 rounded-lg text-white text-center"
+                        },
+                        [
+                          _c(
+                            "router-link",
+                            {
+                              staticClass: "text-lg font-bold text-white",
+                              staticStyle: { color: "white" },
+                              attrs: { to: "/dropbox" }
+                            },
+                            [
+                              _c(
+                                "svg",
+                                {
+                                  staticClass: "w-6 h-6 align-top inline-block",
+                                  attrs: {
+                                    xmlns: "http://www.w3.org/2000/svg",
+                                    fill: "none",
+                                    viewBox: "0 0 24 24",
+                                    stroke: "currentColor"
+                                  }
+                                },
+                                [
+                                  _c("path", {
+                                    attrs: {
+                                      "stroke-linecap": "round",
+                                      "stroke-linejoin": "round",
+                                      "stroke-width": "2",
+                                      d:
+                                        "M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"
+                                    }
+                                  })
+                                ]
+                              ),
+                              _vm._v("\n\t\t\t\t\t\t\tDropbox")
+                            ]
+                          )
+                        ],
+                        1
+                      )
+                    ])
+                  ])
                 ]
               )
-            ],
-            1
+            ]
           ),
           _vm._v(" "),
-          _c(
-            "div",
-            {
-              staticClass: "py-16 bg-blue-500 rounded-lg text-white text-center"
-            },
-            [
-              _c(
-                "router-link",
-                {
-                  staticClass: "text-lg font-bold text-white",
-                  staticStyle: { color: "white" },
-                  attrs: { to: "/communication" }
-                },
-                [
-                  _c(
-                    "svg",
-                    {
-                      staticClass: "w-6 h-6 align-top inline-block",
-                      attrs: {
-                        xmlns: "http://www.w3.org/2000/svg",
-                        viewBox: "0 0 20 20",
-                        fill: "currentColor"
-                      }
-                    },
-                    [
-                      _c("path", {
-                        attrs: {
-                          d:
-                            "M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z"
-                        }
-                      })
-                    ]
-                  ),
-                  _vm._v("\n\t\t\t\t\t\tQuizzes")
-                ]
-              )
-            ],
-            1
-          ),
-          _vm._v(" "),
-          _c(
-            "div",
-            {
-              staticClass: "py-16 bg-blue-500 rounded-lg text-white text-center"
-            },
-            [
-              _c(
-                "router-link",
-                {
-                  staticClass: "text-lg font-bold text-white",
-                  staticStyle: { color: "white" },
-                  attrs: { to: "/dropbox" }
-                },
-                [
-                  _c(
-                    "svg",
-                    {
-                      staticClass: "w-6 h-6 align-top inline-block",
-                      attrs: {
-                        xmlns: "http://www.w3.org/2000/svg",
-                        fill: "none",
-                        viewBox: "0 0 24 24",
-                        stroke: "currentColor"
-                      }
-                    },
-                    [
-                      _c("path", {
-                        attrs: {
-                          "stroke-linecap": "round",
-                          "stroke-linejoin": "round",
-                          "stroke-width": "2",
-                          d:
-                            "M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"
-                        }
-                      })
-                    ]
-                  ),
-                  _vm._v("\n\t\t\t\t\t\tDropbox")
-                ]
-              )
-            ],
-            1
-          )
-        ])
-      ])
-    ]),
-    _vm._v(" "),
-    _c(
-      "section",
-      {
-        staticClass: "bg-gray-200 w-3/4 min-h-screen",
-        staticStyle: { "margin-left": "25%" }
-      },
-      [
-        _c(
-          "nav",
-          {
-            staticClass: "flex w-full py-8 px-6 bg-white shadow justify-between"
-          },
-          [
-            _vm._m(0),
-            _vm._v(" "),
-            _c("div", { staticClass: "text-xl font-semibold pr-4 pl-2" }, [
-              _vm._v(
-                "Hello, " + _vm._s(_vm.firstName) + " " + _vm._s(_vm.lastName)
-              )
-            ])
-          ]
-        ),
-        _vm._v(" "),
-        _c("router-view")
-      ],
-      1
-    )
-  ])
+          _c("md-app-content", { staticClass: "p-0" }, [
+            _c(
+              "section",
+              { staticClass: "bg-gray-200 min-h-screen" },
+              [_c("router-view")],
+              1
+            )
+          ])
+        ],
+        1
+      )
+    ],
+    1
+  )
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", [
-      _c("h1", { staticClass: "text-3xl font-bold" }, [_vm._v("BetterD2L")])
-    ])
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 
 
