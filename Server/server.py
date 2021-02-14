@@ -10,37 +10,79 @@ headers = {
 
 @app.route('/dropboxes')
 def dropboxes():
-    payload={}
-
-    # Call our API
+    # URL for dropboxes endpoint
     dropboxes_url = "https://devcop.brightspace.com/d2l/api/le/1.51/7855/dropbox/folders/"
-    submissions_url = "https://devcop.brightspace.com/d2l/api/le/1.51/7855/dropbox/folders/478/submissions/"
 
-    # Serialize response into a dictionary (JSON)
-    dropboxes = requests.request("GET", dropboxes_url, headers=headers, data=payload).json()
-    submissions = requests.request("GET", submissions_url, headers=headers, data=payload).json()
+    # Call API and serialize response into a dictionary (JSON)
+    dropboxes = requests.request("GET", dropboxes_url, headers=headers, data={}).json()
 
     if len(dropboxes) == 0:
         return {}
 
     response = []
-    # Loop through submissions and construct response
+
+    # Loop through dropboxes and construct response
     for db in dropboxes:
         db_id = db['Id']
         info = {}
         info['id'] = db_id
         info['title'] = db['Name']
         info['due_on'] = db['DueDate'][0:10]
-        # Get relevent submission info for our student
+
+        # Call API to get relevant submission info for our student
+        submissions_url = "https://devcop.brightspace.com/d2l/api/le/1.51/7855/dropbox/folders/"+str(db_id)+"/submissions/"
+        submissions = requests.request("GET", submissions_url, headers=headers, data={}).json()
+
         try:
-            sbmsm = next(item for item in submissions if item['Entity']['EntityId'] == STUDENT_ID)
-            info['num_of_submissions'] = len(sbmsm['Submissions'])
-            info['latest_submission'] = sbmsm['CompletionDate'][0:10]
+            sbmsn = next(item for item in submissions if item['Entity']['EntityId'] == STUDENT_ID)
+            info['num_of_submissions'] = len(sbmsn['Submissions'])
+            info['latest_submission'] = sbmsn['CompletionDate'][0:10]
         except:
             info['num_of_submissions'] = 0
             info['latest_submission'] = None
         
         response.append(info)
     
-    return response
-        
+    return str(response)
+
+@app.route('/quizzes')
+def quizzes():
+    # URL for quizzes endpoint
+    quizzes_url = "https://devcop.brightspace.com/d2l/api/le/1.51/7855/quizzes/"
+
+    # Call API and serialize response into a dictionary (JSON)
+    quizzes = requests.request("GET", quizzes_url, headers=headers, data={}).json()
+    quizlist = quizzes['Objects']
+    
+    if len(quizlist) == 0:
+        return {}
+
+    response = []
+
+    # Loop through quizzes and construct response
+    for quiz in quizlist:
+        quiz_id = quiz['QuizId']
+        info = {}
+        info['id'] = quiz_id
+        info['title'] = quiz['Name']
+        info['start_date'] = None if quiz['StartDate'] == None else quiz['StartDate'][0:10]
+        info['end_date'] = None if quiz['EndDate'] == None else quiz['EndDate'][0:10]
+        info['due_date'] = None if quiz['DueDate'] == None else quiz['DueDate'][0:10]
+
+        # Call API to get relevant attempt info for our student
+        attempts_url = "https://devcop.brightspace.com/d2l/api/le/1.51/7855/quizzes/"+str(quiz_id)+"/attempts/"
+        attempts_list = requests.request("GET", attempts_url, headers=headers, data={}).json()['Objects']
+        user_attempts = [d for d in attempts_list if d['UserId'] == STUDENT_ID]  # filter attempts for our user
+
+        info['num_of_attempts'] = len(user_attempts)
+        grade = None
+        for attempt in user_attempts:
+            if grade == None:
+                grade = attempt['Score']
+            else:
+                grade = max(grade, attempt['Score'])
+        info['grade'] = grade
+
+        response.append(info)
+    
+    return str(response)

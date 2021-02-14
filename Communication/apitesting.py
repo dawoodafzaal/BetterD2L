@@ -1,8 +1,9 @@
 import requests
 
 # url = "https://devcop.brightspace.com/d2l/api/le/1.51/7855/dropbox/folders/"
-url = "https://devcop.brightspace.com/d2l/api/le/1.51/7855/dropbox/folders/478/submissions/"
-# url = "https://devcop.brightspace.com/d2l/api/le/1.51/7855/quizzes/"
+# url = "https://devcop.brightspace.com/d2l/api/le/1.51/7855/dropbox/folders/478/submissions/"
+url = "https://devcop.brightspace.com/d2l/api/le/1.51/7855/quizzes/"
+# url = "https://devcop.brightspace.com/d2l/api/le/1.51/7855/quizzes/661/attempts/"
 
 payload={}
 headers = {
