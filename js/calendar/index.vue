@@ -11,15 +11,62 @@ import timeGridPlugin from '@fullcalendar/timegrid';
 import listPlugin from '@fullcalendar/list';
 import interactionPlugin from '@fullcalendar/interaction';
 
+import Request from '../api/ChecklistRequest.js';
+
 export default {
 	data() {
 		return {
-
+			items: []
 		};
+	},
+
+	methods: {
+		retrieve() {
+			let request = new Request({});
+
+			request.retrieve().then(response => {
+		        this.items = response;
+		        this.loading = false;
+
+		        var i;
+				for(i = 0; i < this.items.length; i++){
+				    this.items[i].start = this.items[i]['duedate'];
+				    delete this.items[i].duedate;
+				}
+
+				console.log(this.items);
+
+				const calendarEl = document.getElementById('calendar');
+
+
+
+				let calendar = new Calendar(calendarEl, {
+					plugins: [ interactionPlugin, dayGridPlugin, timeGridPlugin, listPlugin ],
+					initialView: 'dayGridMonth',
+					editable: true,
+					headerToolbar: {
+					left: 'prev,next today',
+					center: 'title',
+					right: 'dayGridMonth,timeGridWeek,listWeek'
+					},
+				  	events: this.items
+				});
+
+				calendar.render();	
+		    });
+		},
+	},
+
+	created() {
+		this.retrieve()
 	},
 
 	mounted() {
 		const calendarEl = document.getElementById('calendar');
+
+		let events;
+
+
 
 		let calendar = new Calendar(calendarEl, {
 			plugins: [ interactionPlugin, dayGridPlugin, timeGridPlugin, listPlugin ],
@@ -30,18 +77,7 @@ export default {
 			center: 'title',
 			right: 'dayGridMonth,timeGridWeek,listWeek'
 			},
-		  	events: [
-				{
-					title: 'Submit Worksheet 5 (CPSC 329 Dropbox)',
-					start: '2021-02-14',
-					editable: false
-				},
-				{
-					title: 'Submit Worksheet 5 (CPSC 329 Dropbox)',
-					start: '2021-02-14',
-					editable: true
-				},
-	    	]
+		  	events: this.items
 		});
 
 		calendar.render();	

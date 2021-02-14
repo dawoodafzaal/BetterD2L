@@ -16349,6 +16349,82 @@ module.exports = {
 
 /***/ }),
 
+/***/ "./js/api/ChecklistRequest.js":
+/*!************************************!*\
+  !*** ./js/api/ChecklistRequest.js ***!
+  \************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _Request__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Request */ "./js/api/Request.js");
+function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Date.prototype.toString.call(Reflect.construct(Date, [], function () {})); return true; } catch (e) { return false; } }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+
+
+var ChecklistRequest = /*#__PURE__*/function (_Request) {
+  _inherits(ChecklistRequest, _Request);
+
+  var _super = _createSuper(ChecklistRequest);
+
+  function ChecklistRequest() {
+    _classCallCheck(this, ChecklistRequest);
+
+    return _super.apply(this, arguments);
+  }
+
+  _createClass(ChecklistRequest, [{
+    key: "retrieve",
+    value: function retrieve() {
+      return this.get('http://127.0.0.1:5000/checklist');
+    }
+  }, {
+    key: "store",
+    value: function store() {
+      return this.post('http://127.0.0.1:5000/checklist');
+    }
+  }, {
+    key: "update",
+    value: function update(id) {
+      return this.patch('http://127.0.0.1:5000/checklist/' + id);
+    }
+  }, {
+    key: "destroy",
+    value: function destroy() {
+      return this["delete"]('http://127.0.0.1:5000/checklist');
+    }
+  }]);
+
+  return ChecklistRequest;
+}(_Request__WEBPACK_IMPORTED_MODULE_0__.default);
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (ChecklistRequest);
+
+/***/ }),
+
 /***/ "./js/api/DropboxRequest.js":
 /*!**********************************!*\
   !*** ./js/api/DropboxRequest.js ***!
@@ -16843,12 +16919,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _fullcalendar_timegrid__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @fullcalendar/timegrid */ "./node_modules/@fullcalendar/timegrid/main.js");
 /* harmony import */ var _fullcalendar_list__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @fullcalendar/list */ "./node_modules/@fullcalendar/list/main.js");
 /* harmony import */ var _fullcalendar_interaction__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @fullcalendar/interaction */ "./node_modules/@fullcalendar/interaction/main.js");
+/* harmony import */ var _api_ChecklistRequest_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../api/ChecklistRequest.js */ "./js/api/ChecklistRequest.js");
 //
 //
 //
 //
 //
 //
+
 
 
 
@@ -16856,10 +16934,48 @@ __webpack_require__.r(__webpack_exports__);
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
-    return {};
+    return {
+      items: []
+    };
+  },
+  methods: {
+    retrieve: function retrieve() {
+      var _this = this;
+
+      var request = new _api_ChecklistRequest_js__WEBPACK_IMPORTED_MODULE_5__.default({});
+      request.retrieve().then(function (response) {
+        _this.items = response;
+        _this.loading = false;
+        var i;
+
+        for (i = 0; i < _this.items.length; i++) {
+          _this.items[i].start = _this.items[i]['duedate'];
+          delete _this.items[i].duedate;
+        }
+
+        console.log(_this.items);
+        var calendarEl = document.getElementById('calendar');
+        var calendar = new _fullcalendar_core__WEBPACK_IMPORTED_MODULE_0__.Calendar(calendarEl, {
+          plugins: [_fullcalendar_interaction__WEBPACK_IMPORTED_MODULE_4__.default, _fullcalendar_daygrid__WEBPACK_IMPORTED_MODULE_1__.default, _fullcalendar_timegrid__WEBPACK_IMPORTED_MODULE_2__.default, _fullcalendar_list__WEBPACK_IMPORTED_MODULE_3__.default],
+          initialView: 'dayGridMonth',
+          editable: true,
+          headerToolbar: {
+            left: 'prev,next today',
+            center: 'title',
+            right: 'dayGridMonth,timeGridWeek,listWeek'
+          },
+          events: _this.items
+        });
+        calendar.render();
+      });
+    }
+  },
+  created: function created() {
+    this.retrieve();
   },
   mounted: function mounted() {
     var calendarEl = document.getElementById('calendar');
+    var events;
     var calendar = new _fullcalendar_core__WEBPACK_IMPORTED_MODULE_0__.Calendar(calendarEl, {
       plugins: [_fullcalendar_interaction__WEBPACK_IMPORTED_MODULE_4__.default, _fullcalendar_daygrid__WEBPACK_IMPORTED_MODULE_1__.default, _fullcalendar_timegrid__WEBPACK_IMPORTED_MODULE_2__.default, _fullcalendar_list__WEBPACK_IMPORTED_MODULE_3__.default],
       initialView: 'dayGridMonth',
@@ -16869,15 +16985,7 @@ __webpack_require__.r(__webpack_exports__);
         center: 'title',
         right: 'dayGridMonth,timeGridWeek,listWeek'
       },
-      events: [{
-        title: 'Submit Worksheet 5 (CPSC 329 Dropbox)',
-        start: '2021-02-14',
-        editable: false
-      }, {
-        title: 'Submit Worksheet 5 (CPSC 329 Dropbox)',
-        start: '2021-02-14',
-        editable: true
-      }]
+      events: this.items
     });
     calendar.render();
   }
@@ -16896,7 +17004,20 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var _api_Request_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../api/Request.js */ "./js/api/Request.js");
+/* harmony import */ var _api_ChecklistRequest_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../api/ChecklistRequest.js */ "./js/api/ChecklistRequest.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_1__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -16924,14 +17045,18 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 
+
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
       showCreateItem: false,
+      showEditDate: false,
+      loading: true,
       new_item: {
         title: '',
-        due_on: ''
+        duedate: ''
       },
+      new_date: '',
       items: [{
         id: 1,
         title: 'Submit Worksheet 5 (CPSC 329 Dropbox)',
@@ -16960,21 +17085,75 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   methods: {
-    createItem: function createItem() {
+    retrieve: function retrieve() {
       var _this = this;
+
+      var request = new _api_ChecklistRequest_js__WEBPACK_IMPORTED_MODULE_0__.default({});
+      request.retrieve().then(function (response) {
+        _this.items = response;
+        _this.loading = false;
+      });
+    },
+    createItem: function createItem() {
+      var _this2 = this;
 
       this.showCreateItem = true;
       this.$nextTick(function () {
-        _this.$refs.item_title.focus();
+        _this2.$refs.item_title.focus();
       });
     },
-    submit: function submit() {},
+    updatedate: function updatedate(id, date) {
+      var _this3 = this;
+
+      axios__WEBPACK_IMPORTED_MODULE_1___default().patch('http://127.0.0.1:5000/checklist', {
+        data: JSON.stringify({
+          'id': id,
+          'duedate': date
+        })
+      }).then(function (response) {
+        _this3.retrieve();
+      });
+    },
+    submit: function submit() {
+      var _this4 = this;
+
+      var request = new _api_ChecklistRequest_js__WEBPACK_IMPORTED_MODULE_0__.default(this.new_item);
+      request.store().then(function (response) {
+        _this4.retrieve();
+
+        _this4.showCreateItem = false;
+      });
+      this.new_item.title = '';
+    },
     cancel: function cancel() {
       this.$refs.item_title.blur();
       this.showCreateItem = false;
     },
-    checkItem: function checkItem() {},
-    deleteItem: function deleteItem() {}
+    checkItem: function checkItem(id, checked) {
+      var d = new Date();
+      var n = d.toISOString();
+      axios__WEBPACK_IMPORTED_MODULE_1___default().patch('http://127.0.0.1:5000/checklist', {
+        data: JSON.stringify({
+          id: id,
+          checkedat: n
+        })
+      }).then(function (response) {// this.retrieve();
+      });
+    },
+    deleteItem: function deleteItem(id) {
+      var _this5 = this;
+
+      axios__WEBPACK_IMPORTED_MODULE_1___default().delete('http://127.0.0.1:5000/checklist', {
+        data: JSON.stringify({
+          'id': id
+        })
+      }).then(function (response) {
+        _this5.retrieve();
+      });
+    }
+  },
+  created: function created() {
+    this.retrieve();
   }
 });
 
@@ -17078,6 +17257,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony import */ var _api_DropboxRequest__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../api/DropboxRequest */ "./js/api/DropboxRequest.js");
+/* harmony import */ var _api_ChecklistRequest__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../api/ChecklistRequest */ "./js/api/ChecklistRequest.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_2__);
 //
 //
 //
@@ -17109,6 +17291,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+
+
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
@@ -17150,6 +17334,18 @@ __webpack_require__.r(__webpack_exports__);
         _this.items = response;
         _this.loading = false;
       });
+    },
+    createChecklistItem: function createChecklistItem(title, date, link) {
+      var _this2 = this;
+
+      var request = new _api_ChecklistRequest__WEBPACK_IMPORTED_MODULE_1__.default({
+        title: title,
+        duedate: date,
+        link: link
+      });
+      request.store().then(function (response) {
+        _this2.retrieve();
+      });
     }
   },
   created: function created() {
@@ -17170,6 +17366,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _api_ChecklistRequest__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../api/ChecklistRequest */ "./js/api/ChecklistRequest.js");
 //
 //
 //
@@ -17199,24 +17398,36 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+
+
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
-      items: {
-        'CPSC 329': [{
-          title: 'Quiz 1',
-          submitted_on: '2/11/2021',
-          due_on: 'Tomorrow',
-          link: 'https://devcop.brightspace.com'
-        }],
-        'STAT 213': [{
-          title: 'Lab Quiz 2',
-          submitted_on: '2/11/2021',
-          due_on: 'Tomorrow',
-          link: 'https://devcop.brightspace.com'
-        }]
-      }
+      items: {}
     };
+  },
+  methods: {
+    retrieve: function retrieve() {
+      var _this = this;
+
+      axios__WEBPACK_IMPORTED_MODULE_0___default().get('http://127.0.0.1:5000/quizzes', {}).then(function (response) {
+        _this.items = response.data;
+      });
+    },
+    createChecklistItem: function createChecklistItem(title, date) {
+      var _this2 = this;
+
+      var request = new _api_ChecklistRequest__WEBPACK_IMPORTED_MODULE_1__.default({
+        title: title,
+        duedate: date
+      });
+      request.store().then(function (response) {
+        _this2.retrieve();
+      });
+    }
+  },
+  created: function created() {
+    this.retrieve();
   }
 });
 
@@ -20241,39 +20452,52 @@ var render = function() {
                 { staticClass: "w-2" },
                 [
                   _c("md-checkbox", {
+                    on: {
+                      change: function($event) {
+                        return _vm.checkItem(item.id, true)
+                      }
+                    },
                     model: {
-                      value: item.checked_at,
+                      value: item.checkedat,
                       callback: function($$v) {
-                        _vm.$set(item, "checked_at", $$v)
+                        _vm.$set(item, "checkedat", $$v)
                       },
-                      expression: "item.checked_at"
+                      expression: "item.checkedat"
                     }
                   })
                 ],
                 1
               ),
               _vm._v(" "),
-              _c(
-                "td",
-                { staticClass: "text-xl" },
-                [
-                  item.related
-                    ? _c(
-                        "router-link",
-                        {
-                          attrs: {
-                            to: item.related.type + "/" + item.related.id
-                          }
-                        },
-                        [_vm._v(_vm._s(item.title))]
-                      )
-                    : _c("span", [_vm._v(_vm._s(item.title))])
-                ],
-                1
-              ),
+              _c("td", { staticClass: "text-xl" }, [
+                item.link != "None"
+                  ? _c("a", { attrs: { target: "_blank", href: item.link } }, [
+                      _vm._v(_vm._s(item.title))
+                    ])
+                  : _c("span", [_vm._v(_vm._s(item.title))])
+              ]),
               _vm._v(" "),
               _c("td", { staticClass: "uppercase text-right" }, [
-                _vm._v(_vm._s(item.due_on))
+                _c("span", [
+                  _c("strong", [_vm._v("Due Date: ")]),
+                  _vm._v(_vm._s(item.duedate))
+                ])
+              ]),
+              _vm._v(" "),
+              _c("td", { staticClass: "text-right" }, [
+                _c(
+                  "button",
+                  {
+                    staticClass:
+                      "bg-red-500 text-white rounded py-4 px-2 font-semibold",
+                    on: {
+                      click: function($event) {
+                        return _vm.deleteItem(item.id)
+                      }
+                    }
+                  },
+                  [_vm._v("Delete Reminder")]
+                )
               ])
             ])
           }),
@@ -20291,24 +20515,66 @@ var render = function() {
               ]
             },
             [
-              _c("td", { attrs: { colspan: "3" } }, [
-                _c("input", {
-                  ref: "item_title",
-                  staticClass: "w-full py-2 px-2 text-xl border-b-2",
-                  attrs: { type: "text", name: "title", placeholder: "" },
-                  on: {
-                    blur: _vm.cancel,
-                    keyup: function($event) {
-                      if (
-                        !$event.type.indexOf("key") &&
-                        $event.keyCode !== 13
-                      ) {
-                        return null
+              _c("td", { attrs: { colspan: "4" } }, [
+                _c("div", { staticClass: "flex justify-between mt-8" }, [
+                  _c("div", { staticClass: "flex flex-grow" }, [
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.new_item.title,
+                          expression: "new_item.title"
+                        }
+                      ],
+                      ref: "item_title",
+                      staticClass: "flex-grow py-2 px-2 text-xl border-b-2",
+                      attrs: { type: "text", name: "title", placeholder: "" },
+                      domProps: { value: _vm.new_item.title },
+                      on: {
+                        input: function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.$set(_vm.new_item, "title", $event.target.value)
+                        }
                       }
-                      return _vm.submit($event)
-                    }
-                  }
-                })
+                    }),
+                    _vm._v(" "),
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.new_item.duedate,
+                          expression: "new_item.duedate"
+                        }
+                      ],
+                      ref: "item_date",
+                      staticClass: "border-b-2 text-xl py-2 px-2",
+                      attrs: { type: "date" },
+                      domProps: { value: _vm.new_item.duedate },
+                      on: {
+                        input: function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.$set(_vm.new_item, "duedate", $event.target.value)
+                        }
+                      }
+                    })
+                  ]),
+                  _vm._v(" "),
+                  _c(
+                    "button",
+                    {
+                      staticClass:
+                        "text-lg py-2 px-4 text-white bg-green-500 rounded font-semibold",
+                      on: { click: _vm.submit }
+                    },
+                    [_vm._v("Add Reminder")]
+                  )
+                ])
               ])
             ]
           )
@@ -20546,7 +20812,21 @@ var render = function() {
                                 "button",
                                 {
                                   staticClass:
-                                    "uppercase text-sm py-2 px-4 bg-blue-500 text-white rounded font-bold mb-2"
+                                    "uppercase text-sm py-2 px-4 bg-blue-500 text-white rounded font-bold mb-2",
+                                  on: {
+                                    click: function($event) {
+                                      _vm.createChecklistItem(
+                                        "Submit " +
+                                          item.title +
+                                          " (" +
+                                          name +
+                                          " dropbox)",
+                                        item.due_on,
+                                        "https://devcop.brightspace.com/d2l/lms/dropbox/user/folder_submit_files.d2l?db=" +
+                                          item.id
+                                      )
+                                    }
+                                  }
                                 },
                                 [_vm._v("Add to checklist")]
                               )
@@ -20607,74 +20887,64 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("section", { staticClass: "py-6 px-6" }, [
-    _c(
-      "div",
-      { staticClass: "rounded-lg bg-white p-6 pb-12 shadow-lg" },
-      [
-        _vm._m(0),
-        _vm._v(" "),
-        _vm._l(_vm.items, function(course, name) {
-          return _c("div", [
-            _c(
-              "h2",
-              {
-                staticClass: "w-full text-lg border-b mt-6 mb-2 py-2 font-bold"
-              },
-              [_vm._v(_vm._s(name))]
-            ),
-            _vm._v(" "),
-            _c(
-              "table",
-              { staticClass: "w-full" },
-              _vm._l(course, function(item) {
-                return _c("tr", [
-                  _c("td", { staticClass: "align-top w-1/2" }, [
-                    _c(
-                      "a",
-                      {
-                        staticClass: "text-xl",
-                        attrs: { href: item.link, target: "_blank" }
-                      },
-                      [_vm._v(_vm._s(item.title))]
-                    )
-                  ]),
-                  _vm._v(" "),
-                  _c("td", { staticClass: "align-top" }, [
-                    item.submitted_on
-                      ? _c("span", [
-                          _vm._v("Submitted: " + _vm._s(item.submitted_on))
-                        ])
-                      : _vm._e()
-                  ]),
-                  _vm._v(" "),
-                  _c("td", { staticClass: "text-right pb-4" }, [
-                    !item.submitted_on
-                      ? _c("div", [
-                          _c(
-                            "button",
-                            {
-                              staticClass:
-                                "uppercase text-sm py-2 px-4 bg-blue-500 text-white rounded font-bold mb-2"
-                            },
-                            [_vm._v("Add to checklist")]
-                          )
-                        ])
-                      : _vm._e(),
-                    _vm._v(" "),
-                    _c("span", [
-                      _vm._v("Closed by "),
-                      _c("strong", [_vm._v(_vm._s(item.due_on))])
+    _c("div", { staticClass: "rounded-lg bg-white p-6 pb-12 shadow-lg" }, [
+      _vm._m(0),
+      _vm._v(" "),
+      _c("div", [
+        _c(
+          "table",
+          { staticClass: "w-full" },
+          _vm._l(_vm.items, function(item) {
+            return _c("tr", [
+              _c("td", { staticClass: "align-top w-1/2 py-4" }, [
+                _c(
+                  "a",
+                  { staticClass: "text-xl", attrs: { target: "_blank" } },
+                  [_vm._v(_vm._s(item.title))]
+                )
+              ]),
+              _vm._v(" "),
+              _c("td", { staticClass: "align-top py-4" }, [
+                item.num_of_attempts > 0
+                  ? _c("span", [
+                      _vm._v("Attempts: " + _vm._s(item.num_of_attempts))
                     ])
-                  ])
+                  : _vm._e()
+              ]),
+              _vm._v(" "),
+              _c("td", { staticClass: "text-right pb-4 py-4" }, [
+                item.num_of_attempts
+                  ? _c("div", [
+                      _c(
+                        "button",
+                        {
+                          staticClass:
+                            "uppercase text-sm py-2 px-4 bg-blue-500 text-white rounded font-bold mb-2",
+                          on: {
+                            click: function($event) {
+                              _vm.createChecklistItem(
+                                "Study for " + item.title + " (Quiz)",
+                                item.due_on
+                              )
+                            }
+                          }
+                        },
+                        [_vm._v("Add to checklist")]
+                      )
+                    ])
+                  : _vm._e(),
+                _vm._v(" "),
+                _c("span", [
+                  _vm._v("Closed by "),
+                  _c("strong", [_vm._v(_vm._s(item.end_date))])
                 ])
-              }),
-              0
-            )
-          ])
-        })
-      ],
-      2
-    )
+              ])
+            ])
+          }),
+          0
+        )
+      ])
+    ])
   ])
 }
 var staticRenderFns = [

@@ -18,7 +18,7 @@
 						</td>
 						<td class="text-right py-4">
 							<div v-if="!item.latest_submission">
-								<button class="uppercase text-sm py-2 px-4 bg-blue-500 text-white rounded font-bold mb-2">Add to checklist</button>
+								<button @click="createChecklistItem(`Submit ${item.title} (${name} dropbox)`, item.due_on, `https://devcop.brightspace.com/d2l/lms/dropbox/user/folder_submit_files.d2l?db=${item.id}`)" class="uppercase text-sm py-2 px-4 bg-blue-500 text-white rounded font-bold mb-2">Add to checklist</button>
 							</div>
 							<span>Closed by <strong>{{ item.due_on }}</strong></span>
 						</td>
@@ -31,6 +31,9 @@
 
 <script>
 import Request from '../api/DropboxRequest';
+import ChecklistRequest from '../api/ChecklistRequest';
+
+import axios from 'axios';
 
 export default {
 	data() {
@@ -74,6 +77,17 @@ export default {
 		        this.items = response;
 		        this.loading = false;
 		    });
+		},
+
+		createChecklistItem(title, date, link) {
+			let request = new ChecklistRequest({
+				title: title,
+				duedate: date,
+				link: link
+			});
+			request.store().then((response) => {
+				this.retrieve();
+			});
 		}
 	},
 

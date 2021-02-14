@@ -13,9 +13,9 @@ class ChecklistRequest extends Request{
     	return this.patch('http://127.0.0.1:5000/checklist/' + id);
     }
 
-    destroy(id) {
-        return this.delete('http://127.0.0.1:5000/checklist/' + id);
+    destroy() {
+        return this.delete('http://127.0.0.1:5000/checklist');
     }
 }
 
-export default DropboxRequest
+export default ChecklistRequest
