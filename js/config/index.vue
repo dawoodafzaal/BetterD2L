@@ -15,7 +15,7 @@
 				</tr>
 				<tr v-show="showCreateItem">
 					<td colspan="3">
-						<input ref="item_title" @blur="cancel" @keyup.13="submit" class="w-full py-2 px-2 text-xl border-b-2" type="text" name="title" placeholder="">
+						<input ref="item_title" @blur="cancel" @keyup.13="submit" class="w-full py-2 px-2 text-xl border-b-2" type="text" name="title" placeholder="Enter shell id">
 					</td>
 				</tr>
 			</table>

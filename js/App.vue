@@ -60,6 +60,29 @@
 			</md-app-drawer>
 			<md-app-content class="p-0">
 				<section class="bg-gray-200 min-h-screen">
+					<section>
+						<div style="right: 2rem; bottom: 13rem;" v-if="showChat" class="rounded bg-white h-96 w-80 fixed shadow-lg">
+							<div class="flex justify-between bg-blue-600 rounded-t text-blue-100 px-4 py-4 font-semibold">
+								<span>Mental Health Check</span>
+								<button class="text-white" @click="showChat = false">
+									<svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+									  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+									</svg>
+								</button>
+							</div>
+							<div class="h-64 py-6">
+								
+							</div>
+							<div>
+								<input class="border-t w-full focus:outline-none py-4 px-2" type="text" placeholder="Enter a message">
+							</div>
+						</div>
+						<button style="right: 2rem; bottom: 8rem;" @click="showChat = !showChat" class="focus:outline-none hover:bg-blue-500 text-center rounded-full w-16 h-16 bg-blue-600 fixed shadow">
+							<svg class="ml-2 w-12 h-12 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+								<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
+							</svg>
+						</button>
+					</section>
 					<router-view></router-view>
 				</section>
 			</md-app-content>
@@ -75,8 +98,9 @@ export default {
 	data() {
 		return {
 			showSidebar: false,
-			firstName: '',
-			lastName: ''
+			showChat: false,
+			firstName: 'DevCoP',
+			lastName: 'Student'
 		};
 	},
 

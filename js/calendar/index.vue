@@ -9,6 +9,7 @@ import { Calendar } from '@fullcalendar/core';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import timeGridPlugin from '@fullcalendar/timegrid';
 import listPlugin from '@fullcalendar/list';
+import interactionPlugin from '@fullcalendar/interaction';
 
 export default {
 	data() {
@@ -21,8 +22,9 @@ export default {
 		const calendarEl = document.getElementById('calendar');
 
 		let calendar = new Calendar(calendarEl, {
-			plugins: [ dayGridPlugin, timeGridPlugin, listPlugin ],
+			plugins: [ interactionPlugin, dayGridPlugin, timeGridPlugin, listPlugin ],
 			initialView: 'dayGridMonth',
+			editable: true,
 			headerToolbar: {
 			left: 'prev,next today',
 			center: 'title',
@@ -32,6 +34,12 @@ export default {
 				{
 					title: 'Submit Worksheet 5 (CPSC 329 Dropbox)',
 					start: '2021-02-14',
+					editable: false
+				},
+				{
+					title: 'Submit Worksheet 5 (CPSC 329 Dropbox)',
+					start: '2021-02-14',
+					editable: true
 				},
 	    	]
 		});
